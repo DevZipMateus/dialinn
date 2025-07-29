@@ -1,44 +1,69 @@
 
 import React from 'react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/lovable-uploads/bff28d63-8e60-4f7c-aa2a-300e95e8952a.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center',
-          backgroundAttachment: 'fixed'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/70 sm:bg-black/60"></div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-gold-50 to-gold-100">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-gold-200 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold-300 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-orbitron font-black mb-4 sm:mb-6 leading-tight">
-          <span className="hero-text block sm:inline">VISTA A ATITUDE.</span>
-          <br className="hidden sm:block" />
-          <span className="hero-text block sm:inline">SINTA O PESO DA RUA.</span>
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="mb-6 flex justify-center">
+          <Sparkles className="text-gold-500 w-12 h-12 animate-float" />
+        </div>
+        
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfair font-bold mb-6 leading-tight">
+          <span className="text-gray-900">Elegância que</span>
+          <br />
+          <span className="text-gradient">Abraça Você</span>
         </h1>
         
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-6 sm:mb-8 max-w-xs sm:max-w-2xl lg:max-w-4xl mx-auto font-inter px-2">
-          Coleções autênticas para quem vive o agora. Bem-vindo à URBNSZN.
+        <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+          Peças exclusivas para acompanhar o dia a dia de mulheres elegantes. 
+          Moda inclusiva do P ao G5, com muito estilo, elegância e conforto.
         </p>
 
-        <button className="group relative overflow-hidden bg-urban-neon text-urban-black px-6 sm:px-8 py-3 sm:py-4 font-bold text-base sm:text-lg lg:text-xl tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-urban-neon/50 w-full sm:w-auto max-w-xs sm:max-w-none">
-          <span className="relative z-10">VER COLEÇÃO AGORA</span>
-          <div className="absolute inset-0 bg-urban-flame transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-        </button>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <button 
+            className="gold-gradient text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 elegant-shadow group flex items-center gap-2"
+            onClick={() => document.querySelector('#contato')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Conheça Nossa Coleção
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+          
+          <button 
+            className="border-2 border-gold-500 text-gold-600 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-gold-50 hover:scale-105"
+            onClick={() => document.querySelector('#sobre')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Sobre Nós
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="animate-fade-in">
+            <h3 className="text-2xl font-playfair font-bold text-gold-600 mb-2">P ao G5</h3>
+            <p className="text-gray-600">Tamanhos inclusivos para todas</p>
+          </div>
+          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <h3 className="text-2xl font-playfair font-bold text-gold-600 mb-2">Exclusividade</h3>
+            <p className="text-gray-600">Peças únicas e especiais</p>
+          </div>
+          <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <h3 className="text-2xl font-playfair font-bold text-gold-600 mb-2">Elegância</h3>
+            <p className="text-gray-600">Estilo e conforto em cada detalhe</p>
+          </div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-urban-neon rounded-full flex justify-center">
-          <div className="w-1 h-2 sm:h-3 bg-urban-neon rounded-full mt-2 animate-pulse"></div>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-gold-500 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-gold-500 rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
     </section>
