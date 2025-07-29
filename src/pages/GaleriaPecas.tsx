@@ -1,10 +1,10 @@
-
-import React, { useState } from 'react';
-import { ArrowLeft, Filter, Search, Heart } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, Filter, Search, Heart, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import WhatsAppButton from '../components/WhatsAppButton';
+import GalleryImage from '../components/GalleryImage';
 
 interface Peca {
   id: number;
@@ -22,6 +22,19 @@ const GaleriaPecas = () => {
   const [filtroCategoria, setFiltroCategoria] = useState<string>('todas');
   const [busca, setBusca] = useState<string>('');
   const [imagemErros, setImagemErros] = useState<Set<number>>(new Set());
+  const [debugMode, setDebugMode] = useState(false);
+
+  // Debug information
+  useEffect(() => {
+    if (debugMode) {
+      console.log('=== GALLERY DEBUG MODE ENABLED ===');
+      console.log('Total pieces:', pecas.length);
+      console.log('Filtered pieces:', pecasFiltradas.length);
+      console.log('Image errors:', Array.from(imagemErros));
+      console.log('Current URL:', window.location.href);
+      console.log('Base URL:', window.location.origin);
+    }
+  }, [debugMode, imagemErros]);
 
   const pecas: Peca[] = [
     {
@@ -411,19 +424,45 @@ const GaleriaPecas = () => {
   };
 
   const handleImageError = (pecaId: number) => {
+    console.log(`Image error for piece ID: ${pecaId}`);
     setImagemErros(prev => new Set(prev).add(pecaId));
   };
 
-  const getImageSrc = (peca: Peca) => {
-    if (imagemErros.has(peca.id)) {
-      return '/placeholder.svg';
-    }
-    return peca.imagem;
+  const refreshPage = () => {
+    console.log('Refreshing page...');
+    window.location.reload();
   };
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      
+      {/* Debug Panel (only visible in development) */}
+      {(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (
+        <div className="fixed top-20 right-4 z-50 bg-black text-white p-3 rounded text-xs">
+          <button
+            onClick={() => setDebugMode(!debugMode)}
+            className="mb-2 px-2 py-1 bg-blue-600 rounded text-white"
+          >
+            Debug: {debugMode ? 'ON' : 'OFF'}
+          </button>
+          <br />
+          <button
+            onClick={refreshPage}
+            className="px-2 py-1 bg-green-600 rounded text-white flex items-center gap-1"
+          >
+            <RefreshCw className="w-3 h-3" />
+            Refresh
+          </button>
+          {debugMode && (
+            <div className="mt-2 text-xs">
+              <div>Total: {pecas.length}</div>
+              <div>Filtered: {pecasFiltradas.length}</div>
+              <div>Errors: {imagemErros.size}</div>
+            </div>
+          )}
+        </div>
+      )}
       
       {/* Hero Section */}
       <section className="pt-24 pb-12 bg-gradient-to-br from-gold-50 to-gold-100">
@@ -496,8 +535,8 @@ const GaleriaPecas = () => {
                 className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
-                  <img
-                    src={getImageSrc(peca)}
+                  <GalleryImage
+                    src={peca.imagem}
                     alt={peca.nome}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={() => handleImageError(peca.id)}
