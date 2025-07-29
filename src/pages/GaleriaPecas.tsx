@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowLeft, Filter, Search, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -28,7 +27,7 @@ const GaleriaPecas = () => {
       nome: 'Vestido Elegance',
       categoria: 'vestidos',
       preco: 'R$ 189,90',
-      imagem: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=2088&auto=format&fit=crop',
+      imagem: '/lovable-uploads/galeria/1002512835154927.jpeg',
       descricao: 'Vestido midi em tecido fluido, perfeito para ocasiões especiais',
       tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
       cores: ['Preto', 'Azul Marinho', 'Vinho']
@@ -38,7 +37,7 @@ const GaleriaPecas = () => {
       nome: 'Blusa Sophistique',
       categoria: 'blusas',
       preco: 'R$ 89,90',
-      imagem: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=2070&auto=format&fit=crop',
+      imagem: '/lovable-uploads/galeria/1038066235160988.jpeg',
       descricao: 'Blusa social em crepe com detalhes únicos',
       tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
       cores: ['Branco', 'Rosa', 'Nude']
@@ -48,7 +47,7 @@ const GaleriaPecas = () => {
       nome: 'Conjunto Power',
       categoria: 'conjuntos',
       preco: 'R$ 249,90',
-      imagem: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=2070&auto=format&fit=crop',
+      imagem: '/lovable-uploads/galeria/1049792647143677.jpeg',
       descricao: 'Conjunto blazer e calça para a mulher moderna',
       tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
       cores: ['Preto', 'Cinza', 'Bege']
@@ -58,7 +57,7 @@ const GaleriaPecas = () => {
       nome: 'Saia Charm',
       categoria: 'saias',
       preco: 'R$ 119,90',
-      imagem: 'https://images.unsplash.com/photo-1583496661160-fb5886a13d86?q=80&w=2070&auto=format&fit=crop',
+      imagem: '/lovable-uploads/galeria/1056777893278555.jpeg',
       descricao: 'Saia midi plissada com caimento perfeito',
       tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
       cores: ['Preto', 'Caramelo', 'Verde']
@@ -68,7 +67,7 @@ const GaleriaPecas = () => {
       nome: 'Calça Comfort',
       categoria: 'calcas',
       preco: 'R$ 149,90',
-      imagem: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=2070&auto=format&fit=crop',
+      imagem: '/lovable-uploads/galeria/1089543675937845.jpeg',
       descricao: 'Calça de alfaiataria com cintura alta',
       tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
       cores: ['Preto', 'Marinho', 'Cinza']
@@ -78,10 +77,100 @@ const GaleriaPecas = () => {
       nome: 'Vestido Grace',
       categoria: 'vestidos',
       preco: 'R$ 219,90',
-      imagem: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=2088&auto=format&fit=crop',
+      imagem: '/lovable-uploads/galeria/1093633756076567.jpeg',
       descricao: 'Vestido longo para eventos especiais',
       tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
       cores: ['Marsala', 'Preto', 'Azul']
+    },
+    {
+      id: 7,
+      nome: 'Blusa Premium',
+      categoria: 'blusas',
+      preco: 'R$ 129,90',
+      imagem: '/lovable-uploads/galeria/1100497052019216.jpeg',
+      descricao: 'Blusa premium com acabamento refinado',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Branco', 'Off White', 'Creme']
+    },
+    {
+      id: 8,
+      nome: 'Conjunto Luxo',
+      categoria: 'conjuntos',
+      preco: 'R$ 299,90',
+      imagem: '/lovable-uploads/galeria/1102154001782910.jpeg',
+      descricao: 'Conjunto executivo de alta qualidade',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Preto', 'Azul Marinho', 'Cinza Escuro']
+    },
+    {
+      id: 9,
+      nome: 'Saia Moderna',
+      categoria: 'saias',
+      preco: 'R$ 139,90',
+      imagem: '/lovable-uploads/galeria/1126123402992097.jpeg',
+      descricao: 'Saia moderna com design contemporâneo',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Preto', 'Nude', 'Terracota']
+    },
+    {
+      id: 10,
+      nome: 'Calça Elegante',
+      categoria: 'calcas',
+      preco: 'R$ 169,90',
+      imagem: '/lovable-uploads/galeria/1202396691657745.jpeg',
+      descricao: 'Calça elegante para ocasiões especiais',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Preto', 'Azul', 'Vinho']
+    },
+    {
+      id: 11,
+      nome: 'Vestido Festa',
+      categoria: 'vestidos',
+      preco: 'R$ 259,90',
+      imagem: '/lovable-uploads/galeria/1238623704243377.jpeg',
+      descricao: 'Vestido perfeito para festas e eventos',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Dourado', 'Prata', 'Rose Gold']
+    },
+    {
+      id: 12,
+      nome: 'Blusa Casual',
+      categoria: 'blusas',
+      preco: 'R$ 79,90',
+      imagem: '/lovable-uploads/galeria/1247813509891765.jpeg',
+      descricao: 'Blusa casual para o dia a dia',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Branco', 'Listrado', 'Floral']
+    },
+    {
+      id: 13,
+      nome: 'Conjunto Verão',
+      categoria: 'conjuntos',
+      preco: 'R$ 199,90',
+      imagem: '/lovable-uploads/galeria/1250929439639604.jpeg',
+      descricao: 'Conjunto leve para os dias quentes',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Branco', 'Coral', 'Azul Claro']
+    },
+    {
+      id: 14,
+      nome: 'Saia Longa',
+      categoria: 'saias',
+      preco: 'R$ 159,90',
+      imagem: '/lovable-uploads/galeria/1260948015769338.jpeg',
+      descricao: 'Saia longa fluida e confortável',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Floral', 'Listrado', 'Liso']
+    },
+    {
+      id: 15,
+      nome: 'Calça Social',
+      categoria: 'calcas',
+      preco: 'R$ 189,90',
+      imagem: '/lovable-uploads/galeria/1269112174870629.jpeg',
+      descricao: 'Calça social de alta qualidade',
+      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      cores: ['Preto', 'Cinza', 'Azul Marinho']
     }
   ];
 
