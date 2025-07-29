@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowLeft, Filter, Search, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +21,7 @@ const GaleriaPecas = () => {
   const navigate = useNavigate();
   const [filtroCategoria, setFiltroCategoria] = useState<string>('todas');
   const [busca, setBusca] = useState<string>('');
+  const [imagemErros, setImagemErros] = useState<Set<number>>(new Set());
 
   const pecas: Peca[] = [
     {
@@ -408,6 +410,17 @@ const GaleriaPecas = () => {
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
   };
 
+  const handleImageError = (pecaId: number) => {
+    setImagemErros(prev => new Set(prev).add(pecaId));
+  };
+
+  const getImageSrc = (peca: Peca) => {
+    if (imagemErros.has(peca.id)) {
+      return '/placeholder.svg';
+    }
+    return peca.imagem;
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -484,9 +497,11 @@ const GaleriaPecas = () => {
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <img
-                    src={peca.imagem}
+                    src={getImageSrc(peca)}
                     alt={peca.nome}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={() => handleImageError(peca.id)}
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
