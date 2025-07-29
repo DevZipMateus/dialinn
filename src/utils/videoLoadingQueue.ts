@@ -1,5 +1,5 @@
 
-// Advanced video loading queue system
+// Enhanced video loading queue with faster loading
 interface VideoLoadItem {
   url: string;
   element: HTMLVideoElement;
@@ -11,7 +11,7 @@ interface VideoLoadItem {
 class VideoLoadingQueue {
   private queue: VideoLoadItem[] = [];
   private activeLoads = 0;
-  private maxConcurrentLoads = 2; // Conservative for video
+  private maxConcurrentLoads = 6; // Increased from 2
   private loadedVideos = new Set<string>();
 
   constructor() {
@@ -24,24 +24,23 @@ class VideoLoadingQueue {
       if (connection) {
         switch (connection.effectiveType) {
           case '4g':
-            this.maxConcurrentLoads = 3;
+            this.maxConcurrentLoads = 8;
             break;
           case '3g':
-            this.maxConcurrentLoads = 2;
+            this.maxConcurrentLoads = 4;
             break;
           case '2g':
           case 'slow-2g':
-            this.maxConcurrentLoads = 1;
+            this.maxConcurrentLoads = 2;
             break;
           default:
-            this.maxConcurrentLoads = 2;
+            this.maxConcurrentLoads = 6;
         }
       }
     }
   }
 
   addToQueue(item: VideoLoadItem) {
-    // Don't add if already loaded or in queue
     if (this.loadedVideos.has(item.url)) {
       item.onLoad();
       return;
@@ -49,7 +48,6 @@ class VideoLoadingQueue {
 
     const existing = this.queue.find(q => q.url === item.url);
     if (existing) {
-      // Update priority if higher
       if (item.priority > existing.priority) {
         existing.priority = item.priority;
         this.queue.sort((a, b) => b.priority - a.priority);
@@ -104,8 +102,8 @@ class VideoLoadingQueue {
       element.addEventListener('loadeddata', handleLoad);
       element.addEventListener('error', handleError);
       
-      // Set preload based on priority
-      element.preload = item.priority > 8 ? 'auto' : 'metadata';
+      // More aggressive preloading
+      element.preload = item.priority > 7 ? 'auto' : 'metadata';
       element.load();
     });
   }

@@ -1,11 +1,10 @@
 
-// Advanced image cache with persistent storage and format optimization
+// Streamlined image cache with aggressive loading
 interface CacheEntry {
   url: string;
   status: 'loading' | 'loaded' | 'error';
   timestamp: number;
   priority: number;
-  format?: string;
 }
 
 interface LoadingQueue {
@@ -20,9 +19,9 @@ class AdvancedImageCache {
   private loadingPromises = new Map<string, Promise<string>>();
   private loadingQueue: LoadingQueue[] = [];
   private activeLoads = 0;
-  private maxConcurrentLoads = 6;
-  private readonly CACHE_VERSION = 'v1';
-  private readonly CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days
+  private maxConcurrentLoads = 12; // Increased for faster loading
+  private readonly CACHE_VERSION = 'v2';
+  private readonly CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
 
   constructor() {
     this.initPersistentCache();
@@ -36,7 +35,6 @@ class AdvancedImageCache {
         const data = JSON.parse(cached);
         const now = Date.now();
         
-        // Clean expired entries
         Object.entries(data).forEach(([url, entry]: [string, any]) => {
           if (now - entry.timestamp < this.CACHE_EXPIRY && entry.status === 'loaded') {
             this.cache.set(url, entry);
@@ -68,16 +66,16 @@ class AdvancedImageCache {
       if (connection) {
         switch (connection.effectiveType) {
           case '4g':
-            this.maxConcurrentLoads = 8;
+            this.maxConcurrentLoads = 16;
             break;
           case '3g':
-            this.maxConcurrentLoads = 4;
+            this.maxConcurrentLoads = 8;
             break;
           case '2g':
-            this.maxConcurrentLoads = 2;
+            this.maxConcurrentLoads = 4;
             break;
           default:
-            this.maxConcurrentLoads = 6;
+            this.maxConcurrentLoads = 12;
         }
       }
     }
@@ -102,7 +100,7 @@ class AdvancedImageCache {
     // Create loading promise
     const loadPromise = new Promise<string>((resolve, reject) => {
       this.loadingQueue.push({ url: originalUrl, priority, resolve, reject });
-      this.loadingQueue.sort((a, b) => b.priority - a.priority); // Higher priority first
+      this.loadingQueue.sort((a, b) => b.priority - a.priority);
       this.processQueue();
     });
 
@@ -142,7 +140,7 @@ class AdvancedImageCache {
       queueItem.reject(error as Error);
     } finally {
       this.activeLoads--;
-      this.processQueue(); // Process next item
+      this.processQueue();
     }
   }
 
@@ -154,70 +152,34 @@ class AdvancedImageCache {
       priority: 5
     });
 
-    // Try modern formats first if supported
-    const modernFormats = this.getSupportedFormats();
-    
-    // Try original URL first
+    // Simplified approach: try original URL first, then only webp as alternative
     if (await this.checkImageExists(url)) {
       return url;
     }
 
-    // Try alternative formats
+    // Only try webp as alternative (most common modern format)
     const fileName = url.split('/').pop();
     if (fileName) {
       const nameWithoutExt = fileName.split('.')[0];
       const basePath = url.substring(0, url.lastIndexOf('/'));
       
-      // Try modern formats first
-      for (const format of modernFormats) {
-        const modernUrl = `${basePath}/${nameWithoutExt}.${format}`;
-        if (await this.checkImageExists(modernUrl)) {
-          return modernUrl;
-        }
-      }
-
-      // Try standard formats
-      const alternatives = [
-        `${basePath}/${nameWithoutExt}.jpg`,
-        `${basePath}/${nameWithoutExt}.jpeg`,
-        `${basePath}/${nameWithoutExt}.png`,
-        `${basePath}/${nameWithoutExt}.webp`,
-      ];
-
-      for (const altUrl of alternatives) {
-        if (altUrl !== url && await this.checkImageExists(altUrl)) {
-          return altUrl;
-        }
+      const webpUrl = `${basePath}/${nameWithoutExt}.webp`;
+      if (webpUrl !== url && await this.checkImageExists(webpUrl)) {
+        return webpUrl;
       }
     }
 
-    throw new Error('No working image URL found');
-  }
-
-  private getSupportedFormats(): string[] {
-    const formats = [];
-    
-    // Check WebP support
-    const canvas = document.createElement('canvas');
-    canvas.width = 1;
-    canvas.height = 1;
-    
-    if (canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0) {
-      formats.push('webp');
-    }
-    
-    // Check AVIF support (modern browsers)
-    if (typeof window !== 'undefined' && 'createImageBitmap' in window) {
-      formats.push('avif');
-    }
-    
-    return formats;
+    // Fallback to placeholder instead of failing
+    return '/placeholder.svg';
   }
 
   private async checkImageExists(url: string): Promise<boolean> {
     try {
-      const response = await fetch(url, { method: 'HEAD' });
-      return response.ok && response.headers.get('content-type')?.startsWith('image/');
+      const response = await fetch(url, { 
+        method: 'HEAD',
+        cache: 'force-cache'
+      });
+      return response.ok;
     } catch {
       return false;
     }
@@ -225,10 +187,19 @@ class AdvancedImageCache {
 
   preloadImages(urls: string[], priority: number = 3) {
     urls.forEach(url => {
-      if (!this.cache.has(url)) {
+      if (!this.cache.has(url) || this.cache.get(url)?.status !== 'loaded') {
         this.getOptimizedImageUrl(url, priority).catch(() => {
           // Silently fail preload attempts
         });
+      }
+    });
+  }
+
+  // Aggressive preload for critical images
+  preloadImagesAggressively(urls: string[]) {
+    urls.forEach((url, index) => {
+      if (!this.cache.has(url)) {
+        this.getOptimizedImageUrl(url, 10 - Math.floor(index / 4)).catch(() => {});
       }
     });
   }

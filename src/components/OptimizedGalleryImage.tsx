@@ -33,13 +33,17 @@ const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
     shouldPreload,
     priority: dynamicPriority 
   } = useAdvancedIntersectionObserver({
-    threshold: 0.1,
+    threshold: 0.05, // More aggressive threshold
     triggerOnce: true,
-    priority
+    priority,
+    preloadDistance: 800 // Much larger preload distance
   });
 
   useEffect(() => {
-    if (!shouldLoad && !shouldPreload) return;
+    // Start loading immediately for high priority images
+    const shouldStartLoading = shouldLoad || shouldPreload || priority > 12;
+    
+    if (!shouldStartLoading) return;
 
     let isMounted = true;
     setIsLoading(true);
@@ -48,6 +52,7 @@ const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
 
     const loadImage = async () => {
       try {
+        console.log(`Loading image ${src} with priority ${dynamicPriority}`);
         const workingUrl = await advancedImageCache.getOptimizedImageUrl(src, dynamicPriority);
         if (isMounted) {
           setCurrentSrc(workingUrl);
@@ -67,25 +72,19 @@ const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
     return () => {
       isMounted = false;
     };
-  }, [src, shouldLoad, shouldPreload, dynamicPriority, onError]);
-
-  // Preload next images when this one is near viewport
-  useEffect(() => {
-    if (shouldPreload && !hasError) {
-      // This could be enhanced to preload related images
-      // For now, we rely on the advanced cache's built-in preloading
-    }
-  }, [shouldPreload, hasError]);
+  }, [src, shouldLoad, shouldPreload, dynamicPriority, priority, onError]);
 
   const handleImageLoad = () => {
     const loadTime = performance.now() - loadStartTime;
     performanceMonitor.recordImageLoad(src, loadTime);
+    console.log(`Image loaded successfully: ${src} in ${loadTime.toFixed(2)}ms`);
     setIsLoading(false);
   };
 
   const handleImageError = () => {
     const loadTime = performance.now() - loadStartTime;
     performanceMonitor.recordMetric('ImageLoadError', loadTime);
+    console.log(`Image load error: ${src}`);
     setIsLoading(false);
     setHasError(true);
     setCurrentSrc('/placeholder.svg');
@@ -102,10 +101,10 @@ const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
         <img
           src={currentSrc}
           alt={alt}
-          className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+          className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}
           onLoad={handleImageLoad}
           onError={handleImageError}
-          loading={priority > 8 ? 'eager' : 'lazy'}
+          loading={priority > 12 ? 'eager' : 'lazy'}
           sizes={sizes}
           decoding="async"
         />

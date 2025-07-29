@@ -27,17 +27,24 @@ const GaleriaPecas = () => {
   const [imagemErros, setImagemErros] = useState<Set<number>>(new Set());
   const [debugMode, setDebugMode] = useState(false);
 
-  // Enhanced preloading strategy
+  // Super aggressive preloading strategy
   useEffect(() => {
-    // Preload first batch of images with high priority
-    const firstBatchUrls = pecas.slice(0, 12).map(peca => peca.imagem);
-    advancedImageCache.preloadImages(firstBatchUrls, 8);
+    console.log('Initializing aggressive image preloading...');
+    
+    // Preload first 20 images with highest priority immediately
+    const criticalUrls = pecas.slice(0, 20).map(peca => peca.imagem);
+    advancedImageCache.preloadImagesAggressively(criticalUrls);
 
-    // Preload remaining images with lower priority
+    // Preload remaining images in batches
     setTimeout(() => {
-      const remainingUrls = pecas.slice(12).map(peca => peca.imagem);
-      advancedImageCache.preloadImages(remainingUrls, 3);
-    }, 2000);
+      const nextBatch = pecas.slice(20, 40).map(peca => peca.imagem);
+      advancedImageCache.preloadImages(nextBatch, 7);
+    }, 500);
+
+    setTimeout(() => {
+      const finalBatch = pecas.slice(40).map(peca => peca.imagem);
+      advancedImageCache.preloadImages(finalBatch, 4);
+    }, 1500);
   }, []);
 
   // Performance monitoring
@@ -497,8 +504,12 @@ const GaleriaPecas = () => {
               <div>Filtered: {pecasFiltradas.length}</div>
               <div>Errors: {imagemErros.size}</div>
               <div>Cache: {advancedImageCache.getCacheStats().loaded}/{advancedImageCache.getCacheStats().total}</div>
+              <div>Loading: {advancedImageCache.getCacheStats().loading}</div>
               <button
-                onClick={() => performanceMonitor.logPerformanceReport()}
+                onClick={() => {
+                  performanceMonitor.logPerformanceReport();
+                  console.log('Advanced Cache Stats:', advancedImageCache.getCacheStats());
+                }}
                 className="px-2 py-1 bg-purple-600 rounded text-white w-full"
               >
                 Performance Report
@@ -569,7 +580,7 @@ const GaleriaPecas = () => {
         </div>
       </section>
 
-      {/* Enhanced Grid de Peças */}
+      {/* Enhanced Grid de Peças with more aggressive loading */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -584,7 +595,7 @@ const GaleriaPecas = () => {
                     alt={peca.nome}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={() => handleImageError(peca.id)}
-                    priority={index < 8 ? 10 : Math.max(8 - Math.floor(index / 4), 3)}
+                    priority={Math.max(15 - index, 5)} // Higher priorities overall
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

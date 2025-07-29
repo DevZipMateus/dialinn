@@ -22,9 +22,9 @@ export const useAdvancedIntersectionObserver = ({
   const [isNearViewport, setIsNearViewport] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
 
-  // Get network-aware settings
+  // More aggressive preload distances
   const networkSettings = networkAware.getOptimalSettings();
-  const effectiveRootMargin = rootMargin || `${preloadDistance || networkSettings.preloadDistance}px`;
+  const effectiveRootMargin = rootMargin || `${preloadDistance || networkSettings.preloadDistance * 2}px`;
 
   useEffect(() => {
     const element = elementRef.current;
@@ -45,14 +45,14 @@ export const useAdvancedIntersectionObserver = ({
       }
     );
 
-    // Separate observer for preloading (larger margin)
+    // Much larger preload margin for aggressive loading
     const preloadObserver = new IntersectionObserver(
       ([entry]) => {
         setIsNearViewport(entry.isIntersecting);
       },
       {
         threshold: 0,
-        rootMargin: `${(preloadDistance || networkSettings.preloadDistance) * 2}px`,
+        rootMargin: `${(preloadDistance || networkSettings.preloadDistance) * 4}px`,
       }
     );
 
@@ -66,11 +66,11 @@ export const useAdvancedIntersectionObserver = ({
   }, [threshold, effectiveRootMargin, triggerOnce, hasTriggered, preloadDistance, networkSettings.preloadDistance]);
 
   const shouldLoad = triggerOnce ? (hasTriggered || isIntersecting) : isIntersecting;
-  const shouldPreload = isNearViewport && networkAware.shouldPreload();
+  const shouldPreload = isNearViewport; // Always preload if near viewport
 
   const getPriority = useCallback(() => {
-    if (isIntersecting) return priority + 3; // Boost priority for visible items
-    if (isNearViewport) return priority + 1; // Slight boost for near items
+    if (isIntersecting) return priority + 5; // Higher boost for visible items
+    if (isNearViewport) return priority + 3; // Higher boost for near items
     return priority;
   }, [isIntersecting, isNearViewport, priority]);
 
