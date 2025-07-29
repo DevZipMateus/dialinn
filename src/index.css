@@ -1,0 +1,133 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    --background: 10 10% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 10 10% 6%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 10 10% 6%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 120 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 100% 50%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 120 100% 50%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-urban-black text-foreground font-inter;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .hero-text {
+    background: linear-gradient(45deg, #39ff14, #ffff00, #ff3030);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient 3s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .urban-gradient {
+    background: linear-gradient(135deg, #0a0a0a 0%, #2a2a2a 50%, #3a3a3a 100%);
+  }
+
+  .neon-border {
+    border: 2px solid #39ff14;
+    box-shadow: 0 0 10px #39ff14, inset 0 0 10px rgba(57, 255, 20, 0.1);
+  }
+
+  .glass-effect {
+    background: rgba(42, 42, 42, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 640px) {
+    .hero-text {
+      line-height: 1.1;
+      word-break: break-word;
+    }
+  }
+
+  /* Improved background handling */
+  @media (max-width: 768px) {
+    [style*="background-attachment: fixed"] {
+      background-attachment: scroll !important;
+    }
+  }
+}
+
+/* Additional responsive utilities */
+@layer utilities {
+  .text-responsive {
+    @apply text-sm sm:text-base md:text-lg;
+  }
+  
+  .heading-responsive {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
+  }
+  
+  .padding-responsive {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+}
