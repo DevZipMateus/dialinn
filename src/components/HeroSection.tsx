@@ -1,12 +1,20 @@
-
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-gold-50 to-gold-100">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/lovable-uploads/b881d55b-9b98-4e82-b324-830e73c2a46f.png)' }}
+      >
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
+      </div>
+
+      {/* Background Pattern - keeping subtle elements */}
+      <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 left-10 w-64 h-64 bg-gold-200 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold-300 rounded-full blur-3xl"></div>
       </div>
@@ -17,12 +25,12 @@ const HeroSection = () => {
         </div>
         
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfair font-bold mb-6 leading-tight">
-          <span className="text-gray-900">Elegância que</span>
+          <span className="text-white">Elegância que</span>
           <br />
           <span className="text-gradient">Abraça Você</span>
         </h1>
         
-        <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-lg sm:text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
           Peças exclusivas para acompanhar o dia a dia de mulheres elegantes. 
           Moda inclusiva do P ao G5, com muito estilo, elegância e conforto.
         </p>
@@ -37,7 +45,7 @@ const HeroSection = () => {
           </button>
           
           <button 
-            className="border-2 border-gold-500 text-gold-600 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-gold-50 hover:scale-105"
+            className="border-2 border-gold-500 text-white bg-black/20 backdrop-blur-sm px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-gold-50 hover:text-gold-600 hover:scale-105"
             onClick={() => document.querySelector('#sobre')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Sobre Nós
@@ -46,16 +54,16 @@ const HeroSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="animate-fade-in">
-            <h3 className="text-2xl font-playfair font-bold text-gold-600 mb-2">P ao G5</h3>
-            <p className="text-gray-600">Tamanhos inclusivos para todas</p>
+            <h3 className="text-2xl font-playfair font-bold text-gold-400 mb-2">P ao G5</h3>
+            <p className="text-white drop-shadow-md">Tamanhos inclusivos para todas</p>
           </div>
           <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <h3 className="text-2xl font-playfair font-bold text-gold-600 mb-2">Exclusividade</h3>
-            <p className="text-gray-600">Peças únicas e especiais</p>
+            <h3 className="text-2xl font-playfair font-bold text-gold-400 mb-2">Exclusividade</h3>
+            <p className="text-white drop-shadow-md">Peças únicas e especiais</p>
           </div>
           <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <h3 className="text-2xl font-playfair font-bold text-gold-600 mb-2">Elegância</h3>
-            <p className="text-gray-600">Estilo e conforto em cada detalhe</p>
+            <h3 className="text-2xl font-playfair font-bold text-gold-400 mb-2">Elegância</h3>
+            <p className="text-white drop-shadow-md">Estilo e conforto em cada detalhe</p>
           </div>
         </div>
       </div>
