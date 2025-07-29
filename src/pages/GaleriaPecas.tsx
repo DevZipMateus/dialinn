@@ -550,23 +550,6 @@ const GaleriaPecas = () => {
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-xl font-playfair font-bold text-gray-900 mb-2">
-                    {peca.nome}
-                  </h3>
-                  
-                  <p className="text-gray-600 mb-3 text-sm leading-relaxed">
-                    {peca.descricao}
-                  </p>
-                  
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-gold-600">
-                      {peca.preco}
-                    </span>
-                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                      {peca.categoria.toUpperCase()}
-                    </span>
-                  </div>
-
                   <div className="mb-4">
                     <p className="text-xs text-gray-500 mb-1">Tamanhos disponíveis:</p>
                     <div className="flex flex-wrap gap-1">
