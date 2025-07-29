@@ -59,60 +59,48 @@ const VideoCarousel = () => {
             </p>
           </div>
 
-          {/* Main Video Display */}
-          <div className="mb-8">
-            <video
-              key={videos[currentVideoIndex]}
-              className="rounded-2xl shadow-2xl w-full h-auto"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src={videos[currentVideoIndex]} type="video/mp4" />
-              Seu navegador não suporta vídeos HTML5.
-            </video>
-          </div>
-
-          {/* Video Thumbnails Carousel */}
+          {/* Videos Carousel */}
           <Carousel className="w-full">
             <CarouselContent className="-ml-2 md:-ml-4">
               {videos.map((video, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/3 md:basis-1/4 lg:basis-1/6">
+                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                   <div
-                    className={`relative cursor-pointer rounded-lg overflow-hidden transition-all duration-300 ${
+                    className={`relative cursor-pointer rounded-2xl overflow-hidden transition-all duration-300 shadow-lg hover:shadow-2xl ${
                       index === currentVideoIndex 
                         ? 'ring-4 ring-gold-500 scale-105' 
-                        : 'hover:scale-105 hover:shadow-lg'
+                        : 'hover:scale-105'
                     }`}
                     onClick={() => handleVideoClick(index)}
                   >
                     <video
-                      className="w-full h-20 md:h-24 object-cover"
+                      className="w-full h-48 md:h-56 lg:h-64 object-cover"
+                      autoPlay={index === currentVideoIndex}
                       muted
+                      loop
                       playsInline
                       preload="metadata"
                     >
-                      <source src={`${video}#t=1`} type="video/mp4" />
+                      <source src={video} type="video/mp4" />
+                      Seu navegador não suporta vídeos HTML5.
                     </video>
-                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                      <Play className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      <Play className="w-8 h-8 md:w-10 md:h-10 text-white" />
                     </div>
                     {index === currentVideoIndex && (
-                      <div className="absolute top-1 right-1 w-2 h-2 bg-gold-500 rounded-full"></div>
+                      <div className="absolute top-3 right-3 w-3 h-3 bg-gold-500 rounded-full animate-pulse"></div>
                     )}
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
+            <CarouselPrevious className="hidden md:flex -left-12" />
+            <CarouselNext className="hidden md:flex -right-12" />
           </Carousel>
 
           {/* Video Counter */}
-          <div className="flex justify-center mt-6">
-            <div className="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-gray-700">
-              {currentVideoIndex + 1} de {videos.length}
+          <div className="flex justify-center mt-8">
+            <div className="bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 text-sm text-gray-700 shadow-lg">
+              Vídeo {currentVideoIndex + 1} de {videos.length} em destaque
             </div>
           </div>
         </div>
