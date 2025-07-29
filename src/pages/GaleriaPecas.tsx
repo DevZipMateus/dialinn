@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import WhatsAppButton from '../components/WhatsAppButton';
 import GalleryImage from '../components/GalleryImage';
+import VideoCarousel from '../components/VideoCarousel';
 
 interface Peca {
   id: number;
@@ -593,6 +594,9 @@ const GaleriaPecas = () => {
           )}
         </div>
       </section>
+
+      {/* Video Carousel Section */}
+      <VideoCarousel />
 
       <Footer />
       <WhatsAppButton />
