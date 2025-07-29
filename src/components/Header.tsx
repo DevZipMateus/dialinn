@@ -32,9 +32,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl md:text-3xl font-playfair font-bold text-gradient">
-              DIA LEINN
-            </h1>
+            <img 
+              src="/lovable-uploads/4bd8f6d7-814e-446e-88c1-5094e42d494d.png" 
+              alt="DIA LEINN Logo" 
+              className="h-12 md:h-14 w-auto"
+            />
           </div>
 
           {/* Desktop Navigation */}
