@@ -3,9 +3,8 @@ import React from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const LocationSection = () => {
-  // Coordenadas aproximadas para R. José Sinimbu Filho, 135 - Setor Norte Ferroviário, Goiânia - GO
-  const latitude = -16.6689;
-  const longitude = -49.2394;
+  // Coordenadas e endereço para R. José Sinimbu Filho, 135 - Setor Norte Ferroviário, Goiânia - GO
+  const address = "R. José Sinimbu Filho, 135, Setor Norte Ferroviário, Goiânia - GO, 74063-340";
   
   return (
     <section className="py-20 bg-gradient-to-b from-gold-50 to-white">
@@ -71,7 +70,7 @@ const LocationSection = () => {
           <div className="bg-white rounded-2xl elegant-shadow overflow-hidden">
             <div className="w-full h-96 relative">
               <iframe
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.01},${latitude-0.01},${longitude+0.01},${latitude+0.01}&layer=mapnik&marker=${latitude},${longitude}`}
+                src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3820.8567!2d-49.2394!3d-16.6689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935ef0b5c1c5c5c5%3A0x1234567890abcdef!2s${encodeURIComponent(address)}!5e0!3m2!1spt-BR!2sbr!4v1640995200000!5m2!1spt-BR!2sbr`}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -84,12 +83,12 @@ const LocationSection = () => {
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
                 <p className="text-white text-sm">
                   <a 
-                    href={`https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=16/${latitude}/${longitude}`}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-gold-300 transition-colors"
                   >
-                    Ver no OpenStreetMap
+                    Ver no Google Maps
                   </a>
                 </p>
               </div>
