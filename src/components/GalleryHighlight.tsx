@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
@@ -6,7 +7,7 @@ const GalleryHighlight = () => {
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Imagens em destaque da galeria
+  // Imagens em destaque da galeria - expandida com mais imagens
   const galleryImages = [
     {
       id: 1,
@@ -43,16 +44,70 @@ const GalleryHighlight = () => {
       src: '/lovable-uploads/galeria/703869159331200.jpeg',
       title: 'Saia Midi Elegante',
       description: 'Caimento perfeito'
+    },
+    {
+      id: 7,
+      src: '/lovable-uploads/galeria/711996638497079.jpeg',
+      title: 'Look Casual Chique',
+      description: 'Conforto e estilo'
+    },
+    {
+      id: 8,
+      src: '/lovable-uploads/galeria/722563677357129.jpeg',
+      title: 'Conjunto Sofisticado',
+      description: 'Versatilidade única'
+    },
+    {
+      id: 9,
+      src: '/lovable-uploads/galeria/725605296929145.jpeg',
+      title: 'Peça Statement',
+      description: 'Destaque garantido'
+    },
+    {
+      id: 10,
+      src: '/lovable-uploads/galeria/727078570122692.jpeg',
+      title: 'Look Contemporâneo',
+      description: 'Tendência atual'
+    },
+    {
+      id: 11,
+      src: '/lovable-uploads/galeria/739245238702349.jpeg',
+      title: 'Estilo Minimalista',
+      description: 'Menos é mais'
+    },
+    {
+      id: 12,
+      src: '/lovable-uploads/galeria/740202325265066.jpeg',
+      title: 'Conjunto Premium',
+      description: 'Qualidade superior'
+    },
+    {
+      id: 13,
+      src: '/lovable-uploads/galeria/744764928137543.jpeg',
+      title: 'Look Festa',
+      description: 'Brilho e glamour'
+    },
+    {
+      id: 14,
+      src: '/lovable-uploads/galeria/749625090785807.jpeg',
+      title: 'Peça Exclusiva',
+      description: 'Design único'
+    },
+    {
+      id: 15,
+      src: '/lovable-uploads/galeria/753423803847560.jpeg',
+      title: 'Conjunto Moderno',
+      description: 'Inovação em moda'
     }
   ];
 
-  // Auto-rotate carousel every 3 seconds
+  // Auto-rotate carousel every 4 seconds (increased due to more images)
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => 
         prevIndex === galleryImages.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [galleryImages.length]);
@@ -124,31 +179,50 @@ const GalleryHighlight = () => {
                 <ChevronRight className="w-6 h-6 text-white" />
               </button>
 
-              {/* Auto-rotation indicator */}
+              {/* Auto-rotation indicator with current image counter */}
               <div className="absolute top-4 right-4 flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
                 <div className="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></div>
-                <span className="text-white text-sm">Auto</span>
+                <span className="text-white text-sm">
+                  {currentImageIndex + 1}/{galleryImages.length}
+                </span>
               </div>
             </div>
 
-            {/* Thumbnail Navigation */}
-            <div className="flex justify-center gap-2 md:gap-4 mb-8">
-              {galleryImages.map((image, index) => (
+            {/* Thumbnail Navigation - Scrollable */}
+            <div className="mb-8">
+              <div className="flex gap-2 md:gap-3 overflow-x-auto pb-4 scrollbar-hide justify-center">
+                {galleryImages.map((image, index) => (
+                  <button
+                    key={image.id}
+                    onClick={() => goToImage(index)}
+                    className={`relative flex-shrink-0 overflow-hidden rounded-lg transition-all duration-300 ${
+                      index === currentImageIndex
+                        ? 'ring-4 ring-gold-500 scale-110'
+                        : 'hover:scale-105 opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Progress Indicators */}
+            <div className="flex justify-center gap-2 mb-8">
+              {galleryImages.map((_, index) => (
                 <button
-                  key={image.id}
+                  key={index}
                   onClick={() => goToImage(index)}
-                  className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     index === currentImageIndex
-                      ? 'ring-4 ring-gold-500 scale-110'
-                      : 'hover:scale-105 opacity-70 hover:opacity-100'
+                      ? 'bg-gold-500 w-8'
+                      : 'bg-gray-300 hover:bg-gray-400'
                   }`}
-                >
-                  <img
-                    src={image.src}
-                    alt={image.title}
-                    className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-cover"
-                  />
-                </button>
+                />
               ))}
             </div>
 
