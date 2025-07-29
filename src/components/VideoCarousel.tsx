@@ -60,10 +60,10 @@ const VideoCarousel = () => {
           </div>
 
           {/* Main Video Display */}
-          <div className="relative mb-8 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="mb-8">
             <video
               key={videos[currentVideoIndex]}
-              className="w-full h-auto"
+              className="rounded-2xl shadow-2xl w-full h-auto"
               autoPlay
               muted
               loop
