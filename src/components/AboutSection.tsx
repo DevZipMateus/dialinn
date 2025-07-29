@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Heart, Users, Award, Target } from 'lucide-react';
 
@@ -79,11 +78,16 @@ const AboutSection = () => {
           </div>
 
           <div className="animate-slide-in-right">
-            <img
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop"
-              alt="Mulher elegante representando os valores da DIA LEINN"
+            <video
+              src="/lovable-uploads/dia.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
               className="rounded-2xl shadow-2xl w-full h-auto"
-            />
+            >
+              Seu navegador não suporta vídeos HTML5.
+            </video>
           </div>
         </div>
 
