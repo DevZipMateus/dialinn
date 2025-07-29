@@ -29,9 +29,8 @@ const VideoCarousel = () => {
     '/lovable-uploads/galeria/videos/dialinn.mp4'
   ];
 
-  // Calculate middle video index
-  const middleIndex = Math.floor(videos.length / 2);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(middleIndex);
+  // Start with the first video as main
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
   // Auto-advance carousel every 15 seconds
   useEffect(() => {
@@ -48,10 +47,22 @@ const VideoCarousel = () => {
     setCurrentVideoIndex(index);
   };
 
+  // Get 5 videos to display (2 before, main, 2 after)
+  const getVisibleVideos = () => {
+    const visibleVideos = [];
+    for (let i = -2; i <= 2; i++) {
+      let index = currentVideoIndex + i;
+      if (index < 0) index = videos.length + index;
+      if (index >= videos.length) index = index - videos.length;
+      visibleVideos.push({ video: videos[index], originalIndex: index, position: i });
+    }
+    return visibleVideos;
+  };
+
   return (
     <section className="py-16 bg-gradient-to-br from-gold-50 to-gold-100">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-playfair font-bold text-gray-900 mb-4">
               Vídeos da <span className="text-gradient">Coleção</span>
@@ -61,46 +72,57 @@ const VideoCarousel = () => {
             </p>
           </div>
 
-          {/* Videos Carousel */}
-          <Carousel className="w-full">
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {videos.map((video, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
-                  <div
-                    className={`relative cursor-pointer rounded-2xl overflow-hidden transition-all duration-300 shadow-lg hover:shadow-2xl ${
-                      index === currentVideoIndex 
-                        ? 'ring-4 ring-gold-500 scale-105' 
-                        : 'hover:scale-105'
-                    }`}
-                    onClick={() => handleVideoClick(index)}
-                  >
-                    <video
-                      className="w-full h-64 md:h-72 lg:h-80 xl:h-96 object-cover"
-                      autoPlay={index === currentVideoIndex}
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                    >
-                      <source src={video} type="video/mp4" />
-                      Seu navegador não suporta vídeos HTML5.
-                    </video>
-                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                      <Play className="w-8 h-8 md:w-10 md:h-10 text-white" />
-                    </div>
-                    {index === currentVideoIndex && (
-                      <div className="absolute top-3 right-3 w-3 h-3 bg-gold-500 rounded-full animate-pulse"></div>
-                    )}
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden md:flex -left-12" />
-            <CarouselNext className="hidden md:flex -right-12" />
-          </Carousel>
+          {/* Videos Display - 5 videos with main one centered */}
+          <div className="flex items-center justify-center gap-4 mb-8">
+            {getVisibleVideos().map(({ video, originalIndex, position }) => (
+              <div
+                key={`${originalIndex}-${position}`}
+                className={`relative cursor-pointer rounded-2xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-2xl ${
+                  position === 0
+                    ? 'ring-4 ring-gold-500 scale-110 z-10 w-80 h-96 md:w-96 md:h-[32rem] lg:w-[28rem] lg:h-[36rem]' 
+                    : 'hover:scale-105 opacity-70 hover:opacity-90 w-48 h-64 md:w-56 md:h-80 lg:w-64 lg:h-96'
+                }`}
+                onClick={() => handleVideoClick(originalIndex)}
+              >
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay={position === 0}
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src={video} type="video/mp4" />
+                  Seu navegador não suporta vídeos HTML5.
+                </video>
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <Play className={`text-white ${position === 0 ? 'w-12 h-12' : 'w-8 h-8'}`} />
+                </div>
+                {position === 0 && (
+                  <div className="absolute top-4 right-4 w-4 h-4 bg-gold-500 rounded-full animate-pulse"></div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="flex justify-center gap-4 mb-8">
+            <button
+              onClick={() => setCurrentVideoIndex(currentVideoIndex === 0 ? videos.length - 1 : currentVideoIndex - 1)}
+              className="bg-white/80 backdrop-blur-sm hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-105"
+            >
+              <Play className="w-6 h-6 rotate-180 text-gray-700" />
+            </button>
+            <button
+              onClick={() => setCurrentVideoIndex(currentVideoIndex === videos.length - 1 ? 0 : currentVideoIndex + 1)}
+              className="bg-white/80 backdrop-blur-sm hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-105"
+            >
+              <Play className="w-6 h-6 text-gray-700" />
+            </button>
+          </div>
 
           {/* Video Counter */}
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center">
             <div className="bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 text-sm text-gray-700 shadow-lg">
               Vídeo {currentVideoIndex + 1} de {videos.length} em destaque
             </div>
