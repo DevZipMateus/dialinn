@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,6 +17,13 @@ const Header = () => {
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Preload da logo
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setLogoLoaded(true);
+    img.src = '/lovable-uploads/4bd8f6d7-814e-446e-88c1-5094e42d494d.png';
   }, []);
 
   const navItems = [
@@ -54,11 +62,24 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-            <img 
-              src="/lovable-uploads/4bd8f6d7-814e-446e-88c1-5094e42d494d.png" 
-              alt="DIA LEINN Logo" 
-              className="h-12 md:h-14 w-auto"
-            />
+            {logoLoaded ? (
+              <img 
+                src="/lovable-uploads/4bd8f6d7-814e-446e-88c1-5094e42d494d.png" 
+                alt="DIA LEINN Logo" 
+                className="h-12 md:h-14 w-auto"
+                loading="eager"
+                onError={(e) => {
+                  console.error('Erro ao carregar logo:', e);
+                  // Fallback: mostrar texto se a imagem não carregar
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            ) : (
+              <div className="h-12 md:h-14 w-24 bg-gold-200 animate-pulse rounded"></div>
+            )}
+            <noscript>
+              <span className="text-xl font-bold text-gold-600">DIA LEINN</span>
+            </noscript>
           </div>
 
           {/* Desktop Navigation */}
