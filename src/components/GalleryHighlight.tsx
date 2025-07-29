@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
@@ -178,14 +177,6 @@ const GalleryHighlight = () => {
               >
                 <ChevronRight className="w-6 h-6 text-white" />
               </button>
-
-              {/* Auto-rotation indicator with current image counter */}
-              <div className="absolute top-4 right-4 flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
-                <div className="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></div>
-                <span className="text-white text-sm">
-                  {currentImageIndex + 1}/{galleryImages.length}
-                </span>
-              </div>
             </div>
 
             {/* Thumbnail Navigation - Scrollable */}
@@ -209,21 +200,6 @@ const GalleryHighlight = () => {
                   </button>
                 ))}
               </div>
-            </div>
-
-            {/* Progress Indicators */}
-            <div className="flex justify-center gap-2 mb-8">
-              {galleryImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToImage(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === currentImageIndex
-                      ? 'bg-gold-500 w-8'
-                      : 'bg-gray-300 hover:bg-gray-400'
-                  }`}
-                />
-              ))}
             </div>
 
             {/* CTA Button */}
