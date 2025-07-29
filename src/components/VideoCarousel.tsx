@@ -1,11 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Play, Pause } from 'lucide-react';
+import { Play } from 'lucide-react';
 
 const VideoCarousel = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const videos = [
     '/lovable-uploads/galeria/videos/1029023305970523.mp4',
@@ -47,18 +46,6 @@ const VideoCarousel = () => {
     setCurrentVideoIndex(index);
   };
 
-  const togglePlay = () => {
-    const videoElement = document.getElementById('main-video') as HTMLVideoElement;
-    if (videoElement) {
-      if (isPlaying) {
-        videoElement.pause();
-      } else {
-        videoElement.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
   return (
     <section className="py-16 bg-gradient-to-br from-gold-50 to-gold-100">
       <div className="container mx-auto px-4">
@@ -75,31 +62,16 @@ const VideoCarousel = () => {
           {/* Main Video Display */}
           <div className="relative mb-8 rounded-2xl overflow-hidden shadow-2xl">
             <video
-              id="main-video"
               key={videos[currentVideoIndex]}
-              className="w-full h-[400px] md:h-[500px] object-cover"
-              controls
+              className="w-full h-auto"
+              autoPlay
               muted
+              loop
               playsInline
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
             >
               <source src={videos[currentVideoIndex]} type="video/mp4" />
               Seu navegador não suporta vídeos HTML5.
             </video>
-            
-            <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-              <button
-                onClick={togglePlay}
-                className="bg-white/90 hover:bg-white text-gray-800 rounded-full p-4 transition-all duration-300 hover:scale-110"
-              >
-                {isPlaying ? (
-                  <Pause className="w-8 h-8" />
-                ) : (
-                  <Play className="w-8 h-8" />
-                )}
-              </button>
-            </div>
           </div>
 
           {/* Video Thumbnails Carousel */}
