@@ -1,10 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Play } from 'lucide-react';
 
 const VideoCarousel = () => {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-
   const videos = [
     '/lovable-uploads/galeria/videos/1029023305970523.mp4',
     '/lovable-uploads/galeria/videos/1139953328164491.mp4',
@@ -29,6 +28,10 @@ const VideoCarousel = () => {
     '/lovable-uploads/galeria/videos/dia.mp4',
     '/lovable-uploads/galeria/videos/dialinn.mp4'
   ];
+
+  // Calculate middle video index
+  const middleIndex = Math.floor(videos.length / 2);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(middleIndex);
 
   // Auto-advance carousel every 15 seconds
   useEffect(() => {
@@ -72,7 +75,7 @@ const VideoCarousel = () => {
                     onClick={() => handleVideoClick(index)}
                   >
                     <video
-                      className="w-full h-48 md:h-56 lg:h-64 object-cover"
+                      className="w-full h-64 md:h-72 lg:h-80 xl:h-96 object-cover"
                       autoPlay={index === currentVideoIndex}
                       muted
                       loop
