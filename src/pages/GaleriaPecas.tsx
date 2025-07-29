@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { ArrowLeft, Filter, Search, Heart, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import WhatsAppButton from '../components/WhatsAppButton';
-import GalleryImage from '../components/GalleryImage';
-import VideoCarousel from '../components/VideoCarousel';
+import OptimizedGalleryImage from '../components/OptimizedGalleryImage';
+import OptimizedVideoCarousel from '../components/OptimizedVideoCarousel';
 
 interface Peca {
   id: number;
@@ -409,30 +409,38 @@ const GaleriaPecas = () => {
     { key: 'calcas', nome: 'Calças' }
   ];
 
-  const pecasFiltradas = pecas.filter(peca => {
-    const matchCategoria = filtroCategoria === 'todas' || peca.categoria === filtroCategoria;
-    const matchBusca = peca.nome.toLowerCase().includes(busca.toLowerCase()) ||
-                      peca.descricao.toLowerCase().includes(busca.toLowerCase());
-    return matchCategoria && matchBusca;
-  });
+  // Memoized filtered results
+  const pecasFiltradas = useMemo(() => {
+    return pecas.filter(peca => {
+      const matchCategoria = filtroCategoria === 'todas' || peca.categoria === filtroCategoria;
+      const matchBusca = peca.nome.toLowerCase().includes(busca.toLowerCase()) ||
+                        peca.descricao.toLowerCase().includes(busca.toLowerCase());
+      return matchCategoria && matchBusca;
+    });
+  }, [filtroCategoria, busca, pecas]);
 
-  const handleWhatsAppClick = (peca: Peca) => {
+  const handleWhatsAppClick = useCallback((peca: Peca) => {
     const message = encodeURIComponent(
       `Olá! Gostaria de mais informações sobre a peça:\n\n${peca.nome}\nPreço: ${peca.preco}\n\nPoderia me enviar mais detalhes?`
     );
     const whatsappNumber = "5562994518406";
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
-  };
+  }, []);
 
-  const handleImageError = (pecaId: number) => {
+  const handleImageError = useCallback((pecaId: number) => {
     console.log(`Image error for piece ID: ${pecaId}`);
     setImagemErros(prev => new Set(prev).add(pecaId));
-  };
+  }, []);
 
   const refreshPage = () => {
     console.log('Refreshing page...');
     window.location.reload();
   };
+
+  const clearFilters = useCallback(() => {
+    setFiltroCategoria('todas');
+    setBusca('');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -530,18 +538,18 @@ const GaleriaPecas = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {pecasFiltradas.map((peca) => (
+            {pecasFiltradas.map((peca, index) => (
               <div
                 key={peca.id}
                 className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
-                  <GalleryImage
+                  <OptimizedGalleryImage
                     src={peca.imagem}
                     alt={peca.nome}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={() => handleImageError(peca.id)}
-                    loading="lazy"
+                    priority={index < 8} // Prioritize first 8 images
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
@@ -582,10 +590,7 @@ const GaleriaPecas = () => {
                 Nenhuma peça encontrada com os filtros aplicados.
               </p>
               <button
-                onClick={() => {
-                  setFiltroCategoria('todas');
-                  setBusca('');
-                }}
+                onClick={clearFilters}
                 className="text-gold-600 hover:text-gold-700 font-medium"
               >
                 Limpar filtros
@@ -595,8 +600,8 @@ const GaleriaPecas = () => {
         </div>
       </section>
 
-      {/* Video Carousel Section */}
-      <VideoCarousel />
+      {/* Optimized Video Carousel Section */}
+      <OptimizedVideoCarousel />
 
       <Footer />
       <WhatsAppButton />
