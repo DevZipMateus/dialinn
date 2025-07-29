@@ -20,10 +20,25 @@ const VideoItem = memo<VideoItemProps>(({ video, isMain, onClick, shouldPreload 
 
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
+  // Preload main video immediately when it becomes main
+  useEffect(() => {
+    if (isMain && videoRef.current && !isLoaded) {
+      // Force load the video if it's the main one
+      videoRef.current.load();
+    }
+  }, [isMain, isLoaded]);
+
   useEffect(() => {
     if (isMain && videoRef.current && isLoaded) {
-      videoRef.current.play();
-      setIsPlaying(true);
+      const playVideo = async () => {
+        try {
+          await videoRef.current?.play();
+          setIsPlaying(true);
+        } catch (error) {
+          console.log('Error playing video:', error);
+        }
+      };
+      playVideo();
     } else if (!isMain && videoRef.current) {
       videoRef.current.pause();
       setIsPlaying(false);
@@ -48,14 +63,14 @@ const VideoItem = memo<VideoItemProps>(({ video, isMain, onClick, shouldPreload 
       }`}
       onClick={handleVideoClick}
     >
-      {(shouldLoad || shouldPreload) && (
+      {(shouldLoad || shouldPreload || isMain) && (
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
           muted
           loop
           playsInline
-          preload={shouldPreload ? "metadata" : "none"}
+          preload={isMain ? "auto" : (shouldPreload ? "metadata" : "none")}
           onLoadedData={handleVideoLoad}
         >
           <source src={video} type="video/mp4" />
@@ -148,18 +163,20 @@ const OptimizedVideoCarousel = memo(() => {
     setTimeout(() => setIsAutoPlaying(true), 30000);
   }, [videos.length]);
 
-  // Get 5 videos to display (2 before, main, 2 after)
+  // Get 5 videos to display with enhanced preload logic
   const getVisibleVideos = useCallback(() => {
     const visibleVideos = [];
     for (let i = -2; i <= 2; i++) {
       let index = currentVideoIndex + i;
       if (index < 0) index = videos.length + index;
       if (index >= videos.length) index = index - videos.length;
+      
       visibleVideos.push({ 
         video: videos[index], 
         originalIndex: index, 
         position: i,
-        shouldPreload: Math.abs(i) <= 1 // Only preload adjacent videos
+        // Enhanced preload logic: main video gets highest priority, then adjacent videos
+        shouldPreload: i === 0 || Math.abs(i) <= 1
       });
     }
     return visibleVideos;
