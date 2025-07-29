@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Play } from 'lucide-react';
@@ -31,13 +30,13 @@ const VideoCarousel = () => {
     '/lovable-uploads/galeria/videos/dialinn.mp4'
   ];
 
-  // Auto-advance carousel every 6 seconds
+  // Auto-advance carousel every 15 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentVideoIndex((prevIndex) => 
         prevIndex === videos.length - 1 ? 0 : prevIndex + 1
       );
-    }, 6000);
+    }, 15000);
 
     return () => clearInterval(interval);
   }, [videos.length]);
