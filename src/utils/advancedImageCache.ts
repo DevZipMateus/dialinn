@@ -1,4 +1,3 @@
-
 // Streamlined image cache with aggressive loading
 interface CacheEntry {
   url: string;
@@ -19,7 +18,7 @@ class AdvancedImageCache {
   private loadingPromises = new Map<string, Promise<string>>();
   private loadingQueue: LoadingQueue[] = [];
   private activeLoads = 0;
-  private maxConcurrentLoads = 12; // Increased for faster loading
+  private maxConcurrentLoads = 20; // Increased even more for immediate preloading
   private readonly CACHE_VERSION = 'v2';
   private readonly CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -66,25 +65,26 @@ class AdvancedImageCache {
       if (connection) {
         switch (connection.effectiveType) {
           case '4g':
-            this.maxConcurrentLoads = 16;
+            this.maxConcurrentLoads = 25; // Even more aggressive
             break;
           case '3g':
-            this.maxConcurrentLoads = 8;
+            this.maxConcurrentLoads = 15;
             break;
           case '2g':
-            this.maxConcurrentLoads = 4;
+            this.maxConcurrentLoads = 8;
             break;
           default:
-            this.maxConcurrentLoads = 12;
+            this.maxConcurrentLoads = 20;
         }
       }
     }
   }
 
   async getOptimizedImageUrl(originalUrl: string, priority: number = 5): Promise<string> {
-    // Check cache first
+    // Check cache first - immediate return if available
     const cached = this.cache.get(originalUrl);
     if (cached?.status === 'loaded') {
+      console.log(`✅ Cache hit for: ${originalUrl.split('/').pop()}`);
       return cached.url;
     }
     if (cached?.status === 'error') {
@@ -97,10 +97,16 @@ class AdvancedImageCache {
       return existingPromise;
     }
 
-    // Create loading promise
+    // Create loading promise with higher priority handling
     const loadPromise = new Promise<string>((resolve, reject) => {
       this.loadingQueue.push({ url: originalUrl, priority, resolve, reject });
-      this.loadingQueue.sort((a, b) => b.priority - a.priority);
+      // Sort by priority (higher priority first) and add some randomization to prevent bottlenecks
+      this.loadingQueue.sort((a, b) => {
+        if (b.priority === a.priority) {
+          return Math.random() - 0.5; // Small randomization for same priority
+        }
+        return b.priority - a.priority;
+      });
       this.processQueue();
     });
 
@@ -109,15 +115,22 @@ class AdvancedImageCache {
   }
 
   private async processQueue() {
-    if (this.activeLoads >= this.maxConcurrentLoads || this.loadingQueue.length === 0) {
-      return;
+    // Process multiple items from queue simultaneously
+    while (this.activeLoads < this.maxConcurrentLoads && this.loadingQueue.length > 0) {
+      const queueItem = this.loadingQueue.shift();
+      if (!queueItem) break;
+
+      this.activeLoads++;
+      
+      // Don't await - let it run in parallel
+      this.loadSingleImage(queueItem).finally(() => {
+        this.activeLoads--;
+        this.processQueue();
+      });
     }
+  }
 
-    const queueItem = this.loadingQueue.shift();
-    if (!queueItem) return;
-
-    this.activeLoads++;
-    
+  private async loadSingleImage(queueItem: LoadingQueue) {
     try {
       const workingUrl = await this.loadOptimizedImage(queueItem.url);
       this.cache.set(queueItem.url, {
@@ -138,9 +151,6 @@ class AdvancedImageCache {
       });
       this.loadingPromises.delete(queueItem.url);
       queueItem.reject(error as Error);
-    } finally {
-      this.activeLoads--;
-      this.processQueue();
     }
   }
 
@@ -186,21 +196,36 @@ class AdvancedImageCache {
   }
 
   preloadImages(urls: string[], priority: number = 3) {
-    urls.forEach(url => {
+    console.log(`🔄 Preloading ${urls.length} images with priority ${priority}`);
+    urls.forEach((url, index) => {
       if (!this.cache.has(url) || this.cache.get(url)?.status !== 'loaded') {
-        this.getOptimizedImageUrl(url, priority).catch(() => {
+        // Stagger priorities slightly to avoid bottlenecks
+        const adjustedPriority = priority + (index % 3);
+        this.getOptimizedImageUrl(url, adjustedPriority).catch(() => {
           // Silently fail preload attempts
         });
       }
     });
   }
 
-  // Aggressive preload for critical images
+  // Super aggressive preload for immediate loading
   preloadImagesAggressively(urls: string[]) {
+    console.log(`🚀 AGGRESSIVE preload of ${urls.length} images starting NOW!`);
     urls.forEach((url, index) => {
       if (!this.cache.has(url)) {
-        this.getOptimizedImageUrl(url, 10 - Math.floor(index / 4)).catch(() => {});
+        // Much higher priorities for aggressive preloading
+        const priority = Math.max(30 - Math.floor(index / 2), 20);
+        this.getOptimizedImageUrl(url, priority).catch(() => {});
       }
+    });
+  }
+
+  // New method: Immediate preload all
+  preloadAllImmediately(urls: string[]) {
+    console.log(`⚡ IMMEDIATE preload of ALL ${urls.length} images!`);
+    urls.forEach((url, index) => {
+      const priority = Math.max(50 - index, 25); // Extremely high priorities
+      this.getOptimizedImageUrl(url, priority).catch(() => {});
     });
   }
 

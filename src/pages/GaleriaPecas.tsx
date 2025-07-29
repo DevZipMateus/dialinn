@@ -8,6 +8,8 @@ import OptimizedGalleryImage from '../components/OptimizedGalleryImage';
 import OptimizedVideoCarousel from '../components/OptimizedVideoCarousel';
 import { advancedImageCache } from '../utils/advancedImageCache';
 import { performanceMonitor } from '../utils/performanceMonitor';
+import { useImagePreloader } from '../hooks/useImagePreloader';
+import PreloadIndicator from '../components/PreloadIndicator';
 
 interface Peca {
   id: number;
@@ -27,25 +29,28 @@ const GaleriaPecas = () => {
   const [imagemErros, setImagemErros] = useState<Set<number>>(new Set());
   const [debugMode, setDebugMode] = useState(false);
 
-  // Super aggressive preloading strategy
-  useEffect(() => {
-    console.log('Initializing aggressive image preloading...');
-    
-    // Preload first 20 images with highest priority immediately
-    const criticalUrls = pecas.slice(0, 20).map(peca => peca.imagem);
-    advancedImageCache.preloadImagesAggressively(criticalUrls);
-
-    // Preload remaining images in batches
-    setTimeout(() => {
-      const nextBatch = pecas.slice(20, 40).map(peca => peca.imagem);
-      advancedImageCache.preloadImages(nextBatch, 7);
-    }, 500);
-
-    setTimeout(() => {
-      const finalBatch = pecas.slice(40).map(peca => peca.imagem);
-      advancedImageCache.preloadImages(finalBatch, 4);
-    }, 1500);
+  // Extract all image URLs for immediate preloading
+  const allImageUrls = useMemo(() => {
+    return pecas.map(peca => peca.imagem);
   }, []);
+
+  // Immediate preload all images
+  const preloadStats = useImagePreloader(allImageUrls, true);
+
+  // Super aggressive preloading strategy - now immediate
+  useEffect(() => {
+    console.log('🔥 IMMEDIATE PRELOAD MODE ACTIVATED');
+    console.log(`Starting immediate preload of ${allImageUrls.length} images...`);
+    
+    // Preload ALL images immediately with maximum priority
+    allImageUrls.forEach((url, index) => {
+      // Start with highest priorities for visible images
+      const priority = Math.max(25 - Math.floor(index / 4), 10);
+      advancedImageCache.getOptimizedImageUrl(url, priority).catch(() => {
+        console.log(`Preload failed for: ${url.split('/').pop()}`);
+      });
+    });
+  }, [allImageUrls]);
 
   // Performance monitoring
   useEffect(() => {
@@ -482,6 +487,13 @@ const GaleriaPecas = () => {
     <div className="min-h-screen bg-white">
       <Header />
       
+      {/* Preload Progress Indicator */}
+      <PreloadIndicator 
+        loaded={preloadStats.loaded}
+        total={preloadStats.total}
+        isComplete={preloadStats.isComplete}
+      />
+      
       {/* Enhanced Debug Panel */}
       {(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (
         <div className="fixed top-20 right-4 z-50 bg-black text-white p-3 rounded text-xs max-w-xs">
@@ -502,13 +514,16 @@ const GaleriaPecas = () => {
             <div className="mt-2 text-xs space-y-1">
               <div>Total: {pecas.length}</div>
               <div>Filtered: {pecasFiltradas.length}</div>
-              <div>Errors: {imagemErros.size}</div>
+              <div>Preloaded: {preloadStats.loaded}/{preloadStats.total}</div>
+              <div>Preload Errors: {preloadStats.errors}</div>
+              <div>Image Errors: {imagemErros.size}</div>
               <div>Cache: {advancedImageCache.getCacheStats().loaded}/{advancedImageCache.getCacheStats().total}</div>
               <div>Loading: {advancedImageCache.getCacheStats().loading}</div>
               <button
                 onClick={() => {
                   performanceMonitor.logPerformanceReport();
                   console.log('Advanced Cache Stats:', advancedImageCache.getCacheStats());
+                  console.log('Preload Stats:', preloadStats);
                 }}
                 className="px-2 py-1 bg-purple-600 rounded text-white w-full"
               >
@@ -580,7 +595,7 @@ const GaleriaPecas = () => {
         </div>
       </section>
 
-      {/* Enhanced Grid de Peças with more aggressive loading */}
+      {/* Enhanced Grid de Peças with immediate loading */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -595,7 +610,7 @@ const GaleriaPecas = () => {
                     alt={peca.nome}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={() => handleImageError(peca.id)}
-                    priority={Math.max(15 - index, 5)} // Higher priorities overall
+                    priority={Math.max(30 - index, 15)} // Even higher priorities
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, memo } from 'react';
 import { useAdvancedIntersectionObserver } from '../hooks/useAdvancedIntersectionObserver';
 import { advancedImageCache } from '../utils/advancedImageCache';
@@ -33,14 +32,44 @@ const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
     shouldPreload,
     priority: dynamicPriority 
   } = useAdvancedIntersectionObserver({
-    threshold: 0.05, // More aggressive threshold
+    threshold: 0.01, // Even more aggressive threshold
     triggerOnce: true,
     priority,
-    preloadDistance: 800 // Much larger preload distance
+    preloadDistance: 1200 // Larger preload distance
   });
 
   useEffect(() => {
-    // Start loading immediately for high priority images
+    // Check if image is already cached first
+    const cacheStats = advancedImageCache.getCacheStats();
+    if (cacheStats.loaded > 0) {
+      // Image might already be preloaded, try to load immediately
+      let isMounted = true;
+      setIsLoading(true);
+      setHasError(false);
+      setLoadStartTime(performance.now());
+
+      const loadImage = async () => {
+        try {
+          console.log(`Loading cached/preloaded image ${src} with priority ${dynamicPriority}`);
+          const workingUrl = await advancedImageCache.getOptimizedImageUrl(src, dynamicPriority);
+          if (isMounted) {
+            setCurrentSrc(workingUrl);
+          }
+        } catch (error) {
+          console.log('OptimizedGalleryImage: Failed to load preloaded image:', src);
+          if (isMounted) {
+            setHasError(true);
+            setCurrentSrc('/placeholder.svg');
+            onError?.();
+          }
+        }
+      };
+
+      loadImage();
+      return () => { isMounted = false; };
+    }
+
+    // Fallback to intersection observer behavior for non-preloaded images
     const shouldStartLoading = shouldLoad || shouldPreload || priority > 12;
     
     if (!shouldStartLoading) return;
