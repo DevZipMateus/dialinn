@@ -3,6 +3,10 @@ import React from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const LocationSection = () => {
+  // Coordenadas aproximadas para R. José Sinimbu Filho, 135 - Setor Norte Ferroviário, Goiânia - GO
+  const latitude = -16.6689;
+  const longitude = -49.2394;
+  
   return (
     <section className="py-20 bg-gradient-to-b from-gold-50 to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,8 +28,9 @@ const LocationSection = () => {
                 Endereço
               </h3>
               <p className="text-gray-700 text-lg mb-4">
-                Rua Jose Sinimbu Filho<br />
-                Goiânia - GO
+                R. José Sinimbu Filho, 135<br />
+                Setor Norte Ferroviário<br />
+                Goiânia - GO, 74063-340
               </p>
             </div>
 
@@ -64,12 +69,28 @@ const LocationSection = () => {
           </div>
 
           <div className="bg-white rounded-2xl elegant-shadow overflow-hidden">
-            <div className="w-full h-96 bg-gradient-to-br from-gold-100 to-gold-200 flex items-center justify-center">
-              <div className="text-center text-gold-600">
-                <MapPin className="w-16 h-16 mx-auto mb-4" />
-                <p className="text-lg font-medium">
-                  Mapa Interativo<br />
-                  Em Breve
+            <div className="w-full h-96 relative">
+              <iframe
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.01},${latitude-0.01},${longitude+0.01},${latitude+0.01}&layer=mapnik&marker=${latitude},${longitude}`}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={false}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Localização DIA LEINN - R. José Sinimbu Filho, 135, Goiânia - GO"
+                className="w-full h-full"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                <p className="text-white text-sm">
+                  <a 
+                    href={`https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=16/${latitude}/${longitude}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-gold-300 transition-colors"
+                  >
+                    Ver no OpenStreetMap
+                  </a>
                 </p>
               </div>
             </div>
