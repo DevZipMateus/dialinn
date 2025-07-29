@@ -1,105 +1,7 @@
 
 import React, { useState, useEffect, useCallback, memo } from 'react';
-import { Play, Pause } from 'lucide-react';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-
-interface VideoItemProps {
-  video: string;
-  isMain: boolean;
-  onClick: () => void;
-  shouldPreload: boolean;
-}
-
-const VideoItem = memo<VideoItemProps>(({ video, isMain, onClick, shouldPreload }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const { elementRef, shouldLoad } = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '200px',
-  });
-
-  const videoRef = React.useRef<HTMLVideoElement>(null);
-
-  // Preload main video immediately when it becomes main
-  useEffect(() => {
-    if (isMain && videoRef.current && !isLoaded) {
-      // Force load the video if it's the main one
-      videoRef.current.load();
-    }
-  }, [isMain, isLoaded]);
-
-  useEffect(() => {
-    if (isMain && videoRef.current && isLoaded) {
-      const playVideo = async () => {
-        try {
-          await videoRef.current?.play();
-          setIsPlaying(true);
-        } catch (error) {
-          console.log('Error playing video:', error);
-        }
-      };
-      playVideo();
-    } else if (!isMain && videoRef.current) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    }
-  }, [isMain, isLoaded]);
-
-  const handleVideoLoad = () => {
-    setIsLoaded(true);
-  };
-
-  const handleVideoClick = useCallback(() => {
-    onClick();
-  }, [onClick]);
-
-  return (
-    <div
-      ref={elementRef}
-      className={`relative cursor-pointer rounded-2xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-2xl ${
-        isMain
-          ? 'ring-4 ring-gold-500 scale-110 z-10 w-80 h-96 md:w-96 md:h-[32rem] lg:w-[28rem] lg:h-[36rem]' 
-          : 'hover:scale-105 opacity-70 hover:opacity-90 w-48 h-64 md:w-56 md:h-80 lg:w-64 lg:h-96'
-      }`}
-      onClick={handleVideoClick}
-    >
-      {(shouldLoad || shouldPreload || isMain) && (
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          muted
-          loop
-          playsInline
-          preload={isMain ? "auto" : (shouldPreload ? "metadata" : "none")}
-          onLoadedData={handleVideoLoad}
-        >
-          <source src={video} type="video/mp4" />
-          Seu navegador não suporta vídeos HTML5.
-        </video>
-      )}
-      
-      {!isLoaded && (
-        <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-          <div className="text-gray-400 text-sm">Carregando vídeo...</div>
-        </div>
-      )}
-      
-      <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-        {isPlaying ? (
-          <Pause className={`text-white ${isMain ? 'w-12 h-12' : 'w-8 h-8'}`} />
-        ) : (
-          <Play className={`text-white ${isMain ? 'w-12 h-12' : 'w-8 h-8'}`} />
-        )}
-      </div>
-      
-      {isMain && (
-        <div className="absolute top-4 right-4 w-4 h-4 bg-gold-500 rounded-full animate-pulse"></div>
-      )}
-    </div>
-  );
-});
-
-VideoItem.displayName = 'VideoItem';
+import { Play } from 'lucide-react';
+import OptimizedVideoItem from './OptimizedVideoItem';
 
 const OptimizedVideoCarousel = memo(() => {
   const videos = [
@@ -174,9 +76,7 @@ const OptimizedVideoCarousel = memo(() => {
       visibleVideos.push({ 
         video: videos[index], 
         originalIndex: index, 
-        position: i,
-        // Enhanced preload logic: main video gets highest priority, then adjacent videos
-        shouldPreload: i === 0 || Math.abs(i) <= 1
+        position: i
       });
     }
     return visibleVideos;
@@ -199,13 +99,13 @@ const OptimizedVideoCarousel = memo(() => {
 
           {/* Videos Display - 5 videos with main one centered */}
           <div className="flex items-center justify-center gap-4 mb-8">
-            {visibleVideos.map(({ video, originalIndex, position, shouldPreload }) => (
-              <VideoItem
+            {visibleVideos.map(({ video, originalIndex, position }) => (
+              <OptimizedVideoItem
                 key={`${originalIndex}-${position}`}
                 video={video}
                 isMain={position === 0}
                 onClick={() => handleVideoClick(originalIndex)}
-                shouldPreload={shouldPreload}
+                priority={position === 0 ? 10 : Math.max(8 - Math.abs(position), 3)}
               />
             ))}
           </div>

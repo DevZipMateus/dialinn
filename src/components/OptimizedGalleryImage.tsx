@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect, memo } from 'react';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import { imageCache } from '../utils/imageCache';
+import { useAdvancedIntersectionObserver } from '../hooks/useAdvancedIntersectionObserver';
+import { advancedImageCache } from '../utils/advancedImageCache';
+import { performanceMonitor } from '../utils/performanceMonitor';
 import { Skeleton } from './ui/skeleton';
 
 interface OptimizedGalleryImageProps {
@@ -9,7 +10,8 @@ interface OptimizedGalleryImageProps {
   alt: string;
   className?: string;
   onError?: () => void;
-  priority?: boolean;
+  priority?: number;
+  sizes?: string;
 }
 
 const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
@@ -17,28 +19,36 @@ const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
   alt,
   className = '',
   onError,
-  priority = false
+  priority = 5,
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 }) => {
   const [currentSrc, setCurrentSrc] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [loadStartTime, setLoadStartTime] = useState<number>(0);
   
-  const { elementRef, shouldLoad } = useIntersectionObserver({
+  const { 
+    elementRef, 
+    shouldLoad, 
+    shouldPreload,
+    priority: dynamicPriority 
+  } = useAdvancedIntersectionObserver({
     threshold: 0.1,
-    rootMargin: '100px',
     triggerOnce: true,
+    priority
   });
 
   useEffect(() => {
-    if (!shouldLoad && !priority) return;
+    if (!shouldLoad && !shouldPreload) return;
 
     let isMounted = true;
     setIsLoading(true);
     setHasError(false);
+    setLoadStartTime(performance.now());
 
     const loadImage = async () => {
       try {
-        const workingUrl = await imageCache.getWorkingImageUrl(src);
+        const workingUrl = await advancedImageCache.getOptimizedImageUrl(src, dynamicPriority);
         if (isMounted) {
           setCurrentSrc(workingUrl);
         }
@@ -57,13 +67,25 @@ const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
     return () => {
       isMounted = false;
     };
-  }, [src, shouldLoad, priority, onError]);
+  }, [src, shouldLoad, shouldPreload, dynamicPriority, onError]);
+
+  // Preload next images when this one is near viewport
+  useEffect(() => {
+    if (shouldPreload && !hasError) {
+      // This could be enhanced to preload related images
+      // For now, we rely on the advanced cache's built-in preloading
+    }
+  }, [shouldPreload, hasError]);
 
   const handleImageLoad = () => {
+    const loadTime = performance.now() - loadStartTime;
+    performanceMonitor.recordImageLoad(src, loadTime);
     setIsLoading(false);
   };
 
   const handleImageError = () => {
+    const loadTime = performance.now() - loadStartTime;
+    performanceMonitor.recordMetric('ImageLoadError', loadTime);
     setIsLoading(false);
     setHasError(true);
     setCurrentSrc('/placeholder.svg');
@@ -83,7 +105,9 @@ const OptimizedGalleryImage = memo<OptimizedGalleryImageProps>(({
           className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
           onLoad={handleImageLoad}
           onError={handleImageError}
-          loading={priority ? 'eager' : 'lazy'}
+          loading={priority > 8 ? 'eager' : 'lazy'}
+          sizes={sizes}
+          decoding="async"
         />
       )}
       

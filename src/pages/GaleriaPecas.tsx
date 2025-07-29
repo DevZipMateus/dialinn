@@ -6,6 +6,8 @@ import Footer from '../components/Footer';
 import WhatsAppButton from '../components/WhatsAppButton';
 import OptimizedGalleryImage from '../components/OptimizedGalleryImage';
 import OptimizedVideoCarousel from '../components/OptimizedVideoCarousel';
+import { advancedImageCache } from '../utils/advancedImageCache';
+import { performanceMonitor } from '../utils/performanceMonitor';
 
 interface Peca {
   id: number;
@@ -24,6 +26,32 @@ const GaleriaPecas = () => {
   const [busca, setBusca] = useState<string>('');
   const [imagemErros, setImagemErros] = useState<Set<number>>(new Set());
   const [debugMode, setDebugMode] = useState(false);
+
+  // Enhanced preloading strategy
+  useEffect(() => {
+    // Preload first batch of images with high priority
+    const firstBatchUrls = pecas.slice(0, 12).map(peca => peca.imagem);
+    advancedImageCache.preloadImages(firstBatchUrls, 8);
+
+    // Preload remaining images with lower priority
+    setTimeout(() => {
+      const remainingUrls = pecas.slice(12).map(peca => peca.imagem);
+      advancedImageCache.preloadImages(remainingUrls, 3);
+    }, 2000);
+  }, []);
+
+  // Performance monitoring
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (debugMode) {
+        performanceMonitor.logPerformanceReport();
+        const cacheStats = advancedImageCache.getCacheStats();
+        console.log('Cache Stats:', cacheStats);
+      }
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [debugMode]);
 
   // Debug information
   useEffect(() => {
@@ -434,6 +462,7 @@ const GaleriaPecas = () => {
 
   const refreshPage = () => {
     console.log('Refreshing page...');
+    advancedImageCache.clearCache();
     window.location.reload();
   };
 
@@ -446,28 +475,34 @@ const GaleriaPecas = () => {
     <div className="min-h-screen bg-white">
       <Header />
       
-      {/* Debug Panel (only visible in development) */}
+      {/* Enhanced Debug Panel */}
       {(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (
-        <div className="fixed top-20 right-4 z-50 bg-black text-white p-3 rounded text-xs">
+        <div className="fixed top-20 right-4 z-50 bg-black text-white p-3 rounded text-xs max-w-xs">
           <button
             onClick={() => setDebugMode(!debugMode)}
-            className="mb-2 px-2 py-1 bg-blue-600 rounded text-white"
+            className="mb-2 px-2 py-1 bg-blue-600 rounded text-white w-full"
           >
             Debug: {debugMode ? 'ON' : 'OFF'}
           </button>
-          <br />
           <button
             onClick={refreshPage}
-            className="px-2 py-1 bg-green-600 rounded text-white flex items-center gap-1"
+            className="mb-2 px-2 py-1 bg-green-600 rounded text-white flex items-center gap-1 w-full justify-center"
           >
             <RefreshCw className="w-3 h-3" />
-            Refresh
+            Refresh & Clear Cache
           </button>
           {debugMode && (
-            <div className="mt-2 text-xs">
+            <div className="mt-2 text-xs space-y-1">
               <div>Total: {pecas.length}</div>
               <div>Filtered: {pecasFiltradas.length}</div>
               <div>Errors: {imagemErros.size}</div>
+              <div>Cache: {advancedImageCache.getCacheStats().loaded}/{advancedImageCache.getCacheStats().total}</div>
+              <button
+                onClick={() => performanceMonitor.logPerformanceReport()}
+                className="px-2 py-1 bg-purple-600 rounded text-white w-full"
+              >
+                Performance Report
+              </button>
             </div>
           )}
         </div>
@@ -534,7 +569,7 @@ const GaleriaPecas = () => {
         </div>
       </section>
 
-      {/* Grid de Peças */}
+      {/* Enhanced Grid de Peças */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -549,7 +584,8 @@ const GaleriaPecas = () => {
                     alt={peca.nome}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={() => handleImageError(peca.id)}
-                    priority={index < 8} // Prioritize first 8 images
+                    priority={index < 8 ? 10 : Math.max(8 - Math.floor(index / 4), 3)}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
