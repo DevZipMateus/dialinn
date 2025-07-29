@@ -8,22 +8,19 @@ const TestimonialsSection = () => {
       name: 'Maria Silva',
       role: 'Executiva',
       rating: 5,
-      text: 'Encontrei na DIA LEINN exatamente o que procurava: elegância e conforto. As peças são maravilhosas e o atendimento é excepcional!',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616c-94c3b4ca?q=80&w=400'
+      text: 'Encontrei na DIA LEINN exatamente o que procurava: elegância e conforto. As peças são maravilhosas e o atendimento é excepcional!'
     },
     {
       name: 'Ana Costa',
       role: 'Empresária',
       rating: 5,
-      text: 'Sou tamanho G4 e sempre tive dificuldade para encontrar roupas elegantes. A DIA LEINN mudou isso completamente! Peças lindas e inclusivas.',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400'
+      text: 'Sou tamanho G4 e sempre tive dificuldade para encontrar roupas elegantes. A DIA LEINN mudou isso completamente! Peças lindas e inclusivas.'
     },
     {
       name: 'Carla Santos',
       role: 'Advogada',
       rating: 5,
-      text: 'A qualidade das peças é incomparável. Cada detalhe é pensado com carinho. Virei cliente fiel da marca!',
-      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400'
+      text: 'A qualidade das peças é incomparável. Cada detalhe é pensado com carinho. Virei cliente fiel da marca!'
     }
   ];
 
@@ -51,18 +48,11 @@ const TestimonialsSection = () => {
                 <Quote size={40} />
               </div>
               
-              <div className="flex items-center mb-6">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-16 h-16 rounded-full object-cover mr-4 border-3 border-gold-200"
-                />
-                <div>
-                  <h4 className="font-playfair font-bold text-gray-900 text-lg">
-                    {testimonial.name}
-                  </h4>
-                  <p className="text-gold-600 font-medium">{testimonial.role}</p>
-                </div>
+              <div className="mb-6">
+                <h4 className="font-playfair font-bold text-gray-900 text-lg mb-1">
+                  {testimonial.name}
+                </h4>
+                <p className="text-gold-600 font-medium">{testimonial.role}</p>
               </div>
 
               <div className="flex mb-4">
