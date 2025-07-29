@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
@@ -92,11 +91,11 @@ const GalleryHighlight = () => {
           {/* Carousel Container */}
           <div className="relative max-w-5xl mx-auto">
             {/* Main Image Display */}
-            <div className="relative aspect-[4/3] md:aspect-[16/9] lg:aspect-[21/9] overflow-hidden rounded-2xl shadow-2xl mb-8">
+            <div className="relative aspect-[3/2] md:aspect-[4/3] lg:aspect-[5/3] overflow-hidden rounded-2xl shadow-2xl mb-8">
               <img
                 src={galleryImages[currentImageIndex].src}
                 alt={galleryImages[currentImageIndex].title}
-                className="w-full h-full object-cover transition-all duration-700 ease-in-out"
+                className="w-full h-full object-contain bg-gray-50 transition-all duration-700 ease-in-out"
               />
               
               {/* Overlay with info */}
@@ -147,7 +146,7 @@ const GalleryHighlight = () => {
                   <img
                     src={image.src}
                     alt={image.title}
-                    className="w-16 h-12 md:w-20 md:h-16 lg:w-24 lg:h-18 object-cover"
+                    className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-cover"
                   />
                 </button>
               ))}
