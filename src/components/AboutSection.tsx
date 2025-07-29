@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Heart, Users, Award, Target } from 'lucide-react';
 
@@ -79,7 +80,7 @@ const AboutSection = () => {
 
           <div className="animate-slide-in-right">
             <video
-              src="/lovable-uploads/dia.mp4"
+              src="/lovable-uploads/galeria/videos/dialinn.mp4"
               autoPlay
               loop
               muted
