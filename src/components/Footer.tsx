@@ -47,7 +47,7 @@ const Footer = () => {
               </div>
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-gold-500 mt-1" />
-                <span>Av. 44 com Av. Contorno N° 554<br />Galeria Centro Oeste Express<br />Corredor Mato Grosso loja 339<br />Goiânia - GO</span>
+                <span>Av. Contorno, R. 302<br />Setor Norte Ferroviário<br />Goiânia - GO, 74063-390</span>
               </div>
             </div>
           </div>
