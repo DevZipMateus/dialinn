@@ -3,8 +3,8 @@ import React from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const LocationSection = () => {
-  // Coordenadas e endereço para R. José Sinimbu Filho, 135 - Setor Norte Ferroviário, Goiânia - GO
-  const address = "R. José Sinimbu Filho, 135, Setor Norte Ferroviário, Goiânia - GO, 74063-340";
+  // Novo endereço atualizado
+  const address = "Avenida 44 com Avenida Contorno N° 554 Galeria Centro Oeste Express Corredor Mato Grosso loja 339, Goiânia - GO";
   
   return (
     <section className="py-20 bg-gradient-to-b from-gold-50 to-white">
@@ -27,9 +27,10 @@ const LocationSection = () => {
                 Endereço
               </h3>
               <p className="text-gray-700 text-lg mb-4">
-                R. José Sinimbu Filho, 135<br />
-                Setor Norte Ferroviário<br />
-                Goiânia - GO, 74063-340
+                Avenida 44 com Avenida Contorno<br />
+                N° 554 Galeria Centro Oeste Express<br />
+                Corredor Mato Grosso loja 339<br />
+                Goiânia - GO
               </p>
             </div>
 
@@ -77,7 +78,7 @@ const LocationSection = () => {
                 allowFullScreen={false}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Localização DIA LEINN - R. José Sinimbu Filho, 135, Goiânia - GO"
+                title="Localização DIA LEINN - Galeria Centro Oeste Express, Goiânia - GO"
                 className="w-full h-full"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">

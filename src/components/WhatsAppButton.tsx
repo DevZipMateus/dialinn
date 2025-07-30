@@ -4,7 +4,7 @@ import { MessageCircle } from 'lucide-react';
 
 const WhatsAppButton = () => {
   const handleWhatsAppClick = () => {
-    const message = "Olá! Vim pelo site da DIA LEINN e gostaria de conhecer mais sobre suas peças exclusivas.";
+    const message = "Olá! Vim pelo site da DIA LEINN e gostaria de conhecer mais sobre suas peças exclusivas. Vocês ficam na Galeria Centro Oeste Express?";
     const whatsappUrl = `https://wa.me/5562994518406?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
