@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Scissors, Shirt, Crown, Sparkles, Package, Users } from 'lucide-react';
 
@@ -13,8 +12,8 @@ const ServicesSection = () => {
     {
       icon: Users,
       title: 'Moda Inclusiva',
-      description: 'Coleções pensadas para todos os biótipos, do P ao G5, garantindo que cada mulher encontre sua peça ideal.',
-      features: ['Tamanhos P ao G5', 'Modelagem inclusiva', 'Consultoria de estilo']
+      description: 'Coleções pensadas para todos os biótipos, do P ao G1, garantindo que cada mulher encontre sua peça ideal.',
+      features: ['Tamanhos P ao G1', 'Modelagem inclusiva', 'Consultoria de estilo']
     },
     {
       icon: Sparkles,

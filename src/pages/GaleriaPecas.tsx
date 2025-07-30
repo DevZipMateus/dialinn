@@ -45,7 +45,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 189,90',
       imagem: '/lovable-uploads/galeria/595012070155187.jpeg',
       descricao: 'Vestido midi em tecido fluido, perfeito para ocasiões especiais',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Rosa', 'Preto', 'Azul']
     },
     {
@@ -55,7 +55,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 249,90',
       imagem: '/lovable-uploads/galeria/611830828639877.jpeg',
       descricao: 'Conjunto blazer e calça para a mulher moderna',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Marinho', 'Cinza']
     },
     {
@@ -65,7 +65,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 129,90',
       imagem: '/lovable-uploads/galeria/656056254173424.jpeg',
       descricao: 'Blusa social em crepe com detalhes únicos',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Rosa', 'Nude']
     },
     {
@@ -75,7 +75,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 259,90',
       imagem: '/lovable-uploads/galeria/673514409065395.jpeg',
       descricao: 'Vestido perfeito para festas e eventos especiais',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Dourado', 'Prata', 'Rose Gold']
     },
     {
@@ -85,7 +85,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 149,90',
       imagem: '/lovable-uploads/galeria/683387854776260.jpeg',
       descricao: 'Calça de alfaiataria com cintura alta',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Marinho', 'Cinza']
     },
     {
@@ -95,7 +95,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 119,90',
       imagem: '/lovable-uploads/galeria/703869159331200.jpeg',
       descricao: 'Saia midi plissada com caimento perfeito',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Caramelo', 'Verde']
     },
     {
@@ -105,7 +105,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 89,90',
       imagem: '/lovable-uploads/galeria/711996638497079.jpeg',
       descricao: 'Blusa casual para o dia a dia com estilo',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Listrado', 'Floral']
     },
     {
@@ -115,7 +115,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 199,90',
       imagem: '/lovable-uploads/galeria/722563677357129.jpeg',
       descricao: 'Conjunto leve para os dias quentes',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Coral', 'Azul Claro']
     },
     {
@@ -125,7 +125,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 219,90',
       imagem: '/lovable-uploads/galeria/725605296929145.jpeg',
       descricao: 'Vestido longo para eventos especiais',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Marsala', 'Preto', 'Azul']
     },
     {
@@ -135,7 +135,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 139,90',
       imagem: '/lovable-uploads/galeria/727078570122692.jpeg',
       descricao: 'Saia plissada moderna com design contemporâneo',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Nude', 'Terracota']
     },
     {
@@ -145,7 +145,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 109,90',
       imagem: '/lovable-uploads/galeria/739245238702349.jpeg',
       descricao: 'Blusa sofisticada com acabamento refinado',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Off White', 'Creme']
     },
     {
@@ -155,7 +155,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 169,90',
       imagem: '/lovable-uploads/galeria/740202325265066.jpeg',
       descricao: 'Calça social de alta qualidade',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Cinza', 'Azul Marinho']
     },
     {
@@ -165,7 +165,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 199,90',
       imagem: '/lovable-uploads/galeria/744764928137543.jpeg',
       descricao: 'Vestido perfeito para cocktails e eventos',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Vinho', 'Azul']
     },
     {
@@ -175,7 +175,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 299,90',
       imagem: '/lovable-uploads/galeria/749625090785807.jpeg',
       descricao: 'Conjunto executivo de alta qualidade',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Azul Marinho', 'Cinza Escuro']
     },
     {
@@ -185,7 +185,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 129,90',
       imagem: '/lovable-uploads/galeria/753423803847560.jpeg',
       descricao: 'Saia moderna com design contemporâneo',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Nude', 'Bege']
     },
     {
@@ -195,7 +195,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 239,90',
       imagem: '/lovable-uploads/galeria/1002512835154927.jpeg',
       descricao: 'Vestido premium com acabamento sofisticado',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Azul Marinho', 'Vinho']
     },
     {
@@ -205,7 +205,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 99,90',
       imagem: '/lovable-uploads/galeria/1038066235160988.jpeg',
       descricao: 'Blusa social em crepe com detalhes únicos',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Rosa', 'Nude']
     },
     {
@@ -215,7 +215,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 279,90',
       imagem: '/lovable-uploads/galeria/1049792647143677.jpeg',
       descricao: 'Conjunto blazer e calça para a mulher moderna',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Cinza', 'Bege']
     },
     {
@@ -225,7 +225,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 119,90',
       imagem: '/lovable-uploads/galeria/1056777893278555.jpeg',
       descricao: 'Saia midi plissada com caimento perfeito',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Caramelo', 'Verde']
     },
     {
@@ -235,7 +235,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 159,90',
       imagem: '/lovable-uploads/galeria/1089543675937845.jpeg',
       descricao: 'Calça de alfaiataria com cintura alta',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Marinho', 'Cinza']
     },
     {
@@ -245,7 +245,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 249,90',
       imagem: '/lovable-uploads/galeria/1093633756076567.jpeg',
       descricao: 'Vestido longo para eventos especiais',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Marsala', 'Preto', 'Azul']
     },
     {
@@ -255,7 +255,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 139,90',
       imagem: '/lovable-uploads/galeria/1100497052019216.jpeg',
       descricao: 'Blusa premium com acabamento refinado',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Off White', 'Creme']
     },
     {
@@ -265,7 +265,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 319,90',
       imagem: '/lovable-uploads/galeria/1102154001782910.jpeg',
       descricao: 'Conjunto executivo de alta qualidade',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Azul Marinho', 'Cinza Escuro']
     },
     {
@@ -275,7 +275,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 149,90',
       imagem: '/lovable-uploads/galeria/1126123402992097.jpeg',
       descricao: 'Saia moderna com design contemporâneo',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Nude', 'Terracota']
     },
     {
@@ -285,7 +285,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 179,90',
       imagem: '/lovable-uploads/galeria/1202396691657745.jpeg',
       descricao: 'Calça elegante para ocasiões especiais',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Azul', 'Vinho']
     },
     {
@@ -295,7 +295,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 289,90',
       imagem: '/lovable-uploads/galeria/1238623704243377.jpeg',
       descricao: 'Vestido perfeito para festas e eventos glamourosos',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Dourado', 'Prata', 'Rose Gold']
     },
     {
@@ -305,7 +305,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 89,90',
       imagem: '/lovable-uploads/galeria/1247813509891765.jpeg',
       descricao: 'Blusa casual para o dia a dia com elegância',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Listrado', 'Floral']
     },
     {
@@ -315,7 +315,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 219,90',
       imagem: '/lovable-uploads/galeria/1250929439639604.jpeg',
       descricao: 'Conjunto leve e elegante para os dias quentes',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Coral', 'Azul Claro']
     },
     {
@@ -325,7 +325,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 169,90',
       imagem: '/lovable-uploads/galeria/1260948015769338.jpeg',
       descricao: 'Saia longa fluida e confortável para todas as ocasiões',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Floral', 'Listrado', 'Liso']
     },
     {
@@ -335,7 +335,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 199,90',
       imagem: '/lovable-uploads/galeria/1269112174870629.jpeg',
       descricao: 'Calça social de luxo com acabamento impecável',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Cinza', 'Azul Marinho']
     },
     {
@@ -345,7 +345,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 229,90',
       imagem: '/lovable-uploads/galeria/1274861080746622.jpeg',
       descricao: 'Vestido sofisticado para ocasiões especiais',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Vinho', 'Azul Marinho']
     },
     {
@@ -355,7 +355,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 119,90',
       imagem: '/lovable-uploads/galeria/1285765286670369.jpeg',
       descricao: 'Blusa com design contemporâneo e elegante',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Branco', 'Nude', 'Rosa']
     },
     {
@@ -365,7 +365,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 259,90',
       imagem: '/lovable-uploads/galeria/1290165589390123.jpeg',
       descricao: 'Conjunto moderno para a mulher contemporânea',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Cinza', 'Marinho']
     },
     {
@@ -375,7 +375,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 139,90',
       imagem: '/lovable-uploads/galeria/1294211942418697.jpeg',
       descricao: 'Saia elegante com acabamento premium',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Caramelo', 'Verde']
     },
     {
@@ -385,7 +385,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 169,90',
       imagem: '/lovable-uploads/galeria/1300282408333796.jpeg',
       descricao: 'Calça moderna com estilo único',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Azul', 'Cinza']
     },
     {
@@ -395,7 +395,7 @@ const GaleriaPecas = () => {
       preco: 'R$ 279,90',
       imagem: '/lovable-uploads/galeria/1300915994720990.jpeg',
       descricao: 'Vestido glamouroso para eventos noturnos',
-      tamanhos: ['P', 'M', 'G', 'GG', 'G3', 'G4', 'G5'],
+      tamanhos: ['P', 'M', 'G', 'GG', 'G1'],
       cores: ['Preto', 'Dourado', 'Prata']
     }
   ];
