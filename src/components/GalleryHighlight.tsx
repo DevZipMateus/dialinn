@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
@@ -151,17 +152,6 @@ const GalleryHighlight = () => {
                 alt={galleryImages[currentImageIndex].title}
                 className="w-full h-full object-contain bg-gray-50 transition-all duration-700 ease-in-out"
               />
-              
-              {/* Overlay with info */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-playfair font-bold mb-2">
-                  {galleryImages[currentImageIndex].title}
-                </h3>
-                <p className="text-lg md:text-xl text-gray-200">
-                  {galleryImages[currentImageIndex].description}
-                </p>
-              </div>
 
               {/* Navigation Arrows */}
               <button
