@@ -1,10 +1,7 @@
-
 import React from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const LocationSection = () => {
-  // Novo endereço atualizado
-  const address = "Av. Contorno, R. 302 - Setor Norte Ferroviário, Goiânia - GO, 74063-390";
   // Coordenadas específicas: 16°39'28.3"S 49°15'28.0"W
   const latitude = -16.657861;
   const longitude = -49.257778;
@@ -30,10 +27,10 @@ const LocationSection = () => {
                 Endereço
               </h3>
               <p className="text-gray-700 text-lg mb-4">
-                Av. Contorno, R. 302<br />
-                Setor Norte Ferroviário<br />
-                Goiânia - GO<br />
-                CEP: 74063-390
+                Avenida 44 com Avenida Contorno N° 554<br />
+                Galeria Centro Oeste Express<br />
+                Corredor Mato Grosso loja 339<br />
+                Goiânia - GO
               </p>
             </div>
 
