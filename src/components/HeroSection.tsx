@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
@@ -32,7 +33,7 @@ const HeroSection = () => {
         
         <p className="text-lg sm:text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
           Peças exclusivas para acompanhar o dia a dia de mulheres elegantes. 
-          Moda inclusiva do P ao G5, com muito estilo, elegância e conforto.
+          Moda inclusiva do P ao G1, com muito estilo, elegância e conforto.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -54,7 +55,7 @@ const HeroSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="animate-fade-in">
-            <h3 className="text-2xl font-playfair font-bold text-gold-400 mb-2">P ao G5</h3>
+            <h3 className="text-2xl font-playfair font-bold text-gold-400 mb-2">P ao G1</h3>
             <p className="text-white drop-shadow-md">Tamanhos inclusivos para todas</p>
           </div>
           <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>

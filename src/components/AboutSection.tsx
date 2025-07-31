@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Heart, Users, Award, Target } from 'lucide-react';
 
@@ -7,7 +6,7 @@ const AboutSection = () => {
     {
       icon: Heart,
       title: 'Inclusão',
-      description: 'Valorização de todos os biótipos, do P ao G5, promovendo autoestima e confiança.'
+      description: 'Valorização de todos os biótipos, do P ao G1, promovendo autoestima e confiança.'
     },
     {
       icon: Users,
@@ -47,7 +46,7 @@ const AboutSection = () => {
                 Nossa Missão
               </h3>
               <p className="text-gray-700 leading-relaxed text-lg">
-                Valorizar todos os biótipos do P ao G5, promovendo inclusão e buscando 
+                Valorizar todos os biótipos do P ao G1, promovendo inclusão e buscando 
                 superar expectativas, construindo uma relação duradoura com nossas clientes 
                 com muito estilo e elegância.
               </p>

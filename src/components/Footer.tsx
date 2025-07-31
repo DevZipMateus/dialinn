@@ -14,7 +14,7 @@ const Footer = () => {
             </h2>
             <p className="text-gray-300 mb-6 leading-relaxed max-w-md">
               Criando peças exclusivas para acompanhar o dia a dia de mulheres elegantes. 
-              Moda inclusiva do P ao G5, com muito estilo, elegância e conforto.
+              Moda inclusiva do P ao G1, com muito estilo, elegância e conforto.
             </p>
             <div className="flex space-x-4">
               <a

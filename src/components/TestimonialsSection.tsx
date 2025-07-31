@@ -14,7 +14,7 @@ const TestimonialsSection = () => {
       name: 'Ana Costa',
       role: 'Empresária',
       rating: 5,
-      text: 'Sou tamanho G4 e sempre tive dificuldade para encontrar roupas elegantes. A DIA LEINN mudou isso completamente! Peças lindas e inclusivas.'
+      text: 'Sou tamanho G1 e sempre tive dificuldade para encontrar roupas elegantes. A DIA LEINN mudou isso completamente! Peças lindas e inclusivas.'
     },
     {
       name: 'Carla Santos',
