@@ -71,7 +71,7 @@ const ContactSection = () => {
               </div>
             </div>
 
-            <div className="bg-gold-gradient p-8 rounded-2xl text-white text-center">
+            <div className="bg-gold-gradient p-8 rounded-2xl text-gray-900 text-center">
               <h4 className="text-2xl font-playfair font-bold mb-4">
                 Siga-nos nas Redes Sociais
               </h4>
