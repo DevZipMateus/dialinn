@@ -98,7 +98,7 @@ const AboutSection = () => {
               className="text-center p-6 rounded-xl bg-gradient-to-b from-white to-gold-50 elegant-shadow hover:scale-105 transition-all duration-300 animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gold-gradient rounded-full text-white mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gold-gradient rounded-full text-gray-900 mb-6">
                 <value.icon size={32} />
               </div>
               <h3 className="text-xl font-playfair font-bold text-gray-900 mb-4">{value.title}</h3>
