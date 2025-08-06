@@ -37,7 +37,7 @@ const ContactSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto text-center lg:text-left">
           <div className="space-y-8">
             <div className="bg-gradient-to-br from-gold-50 to-white p-8 rounded-2xl elegant-shadow">
               <h3 className="text-2xl font-playfair font-bold text-gray-900 mb-6">
