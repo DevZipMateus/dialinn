@@ -67,7 +67,7 @@ const ServicesSection = () => {
           ))}
         </div>
 
-        <div className="bg-gold-gradient rounded-2xl p-12 text-center text-white">
+        <div className="bg-gold-gradient rounded-2xl p-12 text-center text-gray-900">
           <Shirt className="w-16 h-16 mx-auto mb-6 opacity-90" />
           <h3 className="text-3xl font-playfair font-bold mb-4">
             Experimente a Diferença DIA LEINN
