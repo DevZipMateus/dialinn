@@ -43,7 +43,7 @@ const ServicesSection = () => {
               className="bg-white p-8 rounded-2xl elegant-shadow hover:scale-105 transition-all duration-300 animate-fade-in border border-gold-100"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gold-gradient rounded-full text-white mb-6">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gold-gradient rounded-full text-gray-900 mb-6">
                 <service.icon size={40} />
               </div>
               
