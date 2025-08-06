@@ -51,7 +51,7 @@ const ContactSection = () => {
               <div className="space-y-4">
                 <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm">
                   <div className="w-12 h-12 bg-gold-gradient rounded-full flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-white" />
+                    <Phone className="w-6 h-6 text-gray-900" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">WhatsApp</h4>
@@ -61,7 +61,7 @@ const ContactSection = () => {
 
                 <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm">
                   <div className="w-12 h-12 bg-gold-gradient rounded-full flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-white" />
+                    <Mail className="w-6 h-6 text-gray-900" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">E-mail</h4>
