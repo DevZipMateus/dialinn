@@ -1,9 +1,8 @@
-
 import React from 'react';
 
 const InstagramButton = () => {
   const handleInstagramClick = () => {
-    const instagramUrl = "https://www.instagram.com/dia.leinn/";
+    const instagramUrl = "https://www.instagram.com/dia_leinn";
     window.open(instagramUrl, '_blank');
   };
 
