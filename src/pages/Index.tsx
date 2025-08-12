@@ -9,6 +9,7 @@ import LocationSection from '../components/LocationSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import WhatsAppButton from '../components/WhatsAppButton';
+import InstagramButton from '../components/InstagramButton';
 import GalleryHighlight from '../components/GalleryHighlight';
 
 const Index = () => {
@@ -39,6 +40,7 @@ const Index = () => {
         </section>
       </main>
       <Footer />
+      <InstagramButton />
       <WhatsAppButton />
     </div>
   );
